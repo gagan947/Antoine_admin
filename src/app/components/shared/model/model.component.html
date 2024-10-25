@@ -1,0 +1,32 @@
+<div class="modal fade" tabindex="-1" role="dialog" [ngClass]="{'show': isVisible}"
+      [style.display]="isVisible ? 'block' : 'none'">
+      <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                  <div class="modal-header py-0 border-0">
+                        <button (click)="close()" type="button" class="btn-close ct_close"><i
+                                    class="fa-solid fa-xmark"></i></button>
+                  </div>
+                  <div class="modal-body">
+                        <div class="ct_delete_post_modal">
+                              <figure>
+                                    <div class="ct_delete_post_icon">
+                                          <i class="fa-solid fa-circle-exclamation"></i>
+                                    </div>
+                                    <figcaption class="mt-4">
+                                          <h4 class="ct_fs_18 ct_fw_600"></h4>
+                                          <p class="mb-0">Are you sure you want to Delete this?</p>
+                                    </figcaption>
+                              </figure>
+                              <div class="modal-footer justify-content-center border-0 ct_modal_footer">
+                                    <button type="button" (click)="close()"
+                                          class="ct_blue_btn ct_outline_blue w-100 ct_fw_600">Cancel</button>
+                                    <button (click)="confirm()" type="button"
+                                          class="ct_blue_btn ct_btn_red w-100 ct_fw_600">Delete</button>
+                              </div>
+                        </div>
+                  </div>
+
+            </div>
+      </div>
+</div>
+<div class="modal-backdrop fade" [ngClass]="{'show': isVisible}" *ngIf="isVisible"></div>

@@ -1,1 +1,101 @@
 /* You can add global styles to this file, and also import other style files */
+.err_msg {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin: 4px;
+      color: #de2828;
+      font-size: 14px;
+      font-weight: 400;
+}
+
+::-webkit-scrollbar {
+      width: 5px;
+      height: 5px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+      background: #888;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+      background: #171717;
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+      background: #031647;
+}
+
+.iti.iti--allow-dropdown {
+      width: 100%;
+}
+
+.iti {
+      display: block !important;
+}
+
+.iti .dropdown-menu.country-dropdown {
+      border-top-left-radius: 0px;
+      border-top-right-radius: 0px;
+      border-color: #c7cace;
+      margin-top: -1px;
+      border: none;
+      box-shadow: 1px 1px 5px 0px #c7cace;
+}
+
+.iti .iti__country-list {
+      box-shadow: none;
+      font-size: 14px;
+      margin-left: 0;
+      width: 244px;
+      max-height: 170px;
+      background: #fff;
+}
+
+.iti__flag-container.open+input {
+      border-bottom-left-radius: 0px;
+      border-bottom-right-radius: 0px;
+}
+
+.iti .search-container input {
+      font-size: 14px;
+      border-color: #c7cace;
+      border-radius: 0;
+      padding: 5px 10px;
+      background: #fff;
+}
+
+.iti .search-container input:focus {
+      outline: none;
+}
+
+.iti--allow-dropdown .iti__flag-container,
+.iti--separate-dial-code .iti__flag-container {
+      right: auto;
+      left: 0;
+}
+
+.iti__flag-container {
+      position: absolute;
+      top: 0;
+      bottom: 0;
+      right: 0;
+      padding: 1px;
+}
+
+.iti__selected-flag {
+      z-index: 1;
+      position: relative;
+      display: flex;
+      align-items: center;
+      height: 100%;
+      padding: 0 6px 0 8px;
+      border-right: 1px solid #b5b5b5;
+}
+
+.page-link {
+      cursor: pointer;
+}

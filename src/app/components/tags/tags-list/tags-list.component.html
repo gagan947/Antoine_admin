@@ -1,0 +1,103 @@
+<div class="ct_right_panel">
+      <app-header />
+      <div class="container-fluid">
+            <div class="row">
+                  <div class="col-md-12">
+                        <div class="text-end mb-4">
+                              <a routerLink="/tags/tags-form" class="ct_blue_btn">
+                                    + Add New
+                              </a>
+                        </div>
+                        <div class="ct_light_blue_bg">
+                              <div class="ct_flex_2">
+                                    <h2 class="ct_fs_18 ct_fw_600">List of Tags</h2>
+                                    <div class="ct_right_filter_main">
+                                          <div class="ct_search">
+                                                <input type="text" class="form-control" style="padding-right: 34px;"
+                                                      placeholder="Search Tag">
+                                                <i class="fa-solid fa-magnifying-glass"></i>
+
+                                          </div>
+                                          <div class="w-100">
+                                                <select class="form-control">
+                                                      <option value="">Block</option>
+                                                      <option value="">Block</option>
+                                                      <option value="">Block</option>
+                                                </select>
+                                          </div>
+                                          <div class="w-100">
+                                                <input type="date" class="form-control">
+                                          </div>
+                                    </div>
+                              </div>
+                              <div class="table-responsive ct_mt_40">
+                                    <table class="table ct_custom_table">
+                                          <thead>
+                                                <tr>
+                                                      <th>S.No</th>
+                                                      <th>Tag Name</th>
+                                                      <th>Created At</th>
+                                                      <th>Actions</th>
+                                                </tr>
+                                          </thead>
+                                          <tbody>
+                                                @for (item of data; track $index) {
+                                                <tr>
+                                                      <td>{{$index + 1}}</td>
+                                                      <td>{{item.tag}}</td>
+                                                      <td>{{item.created_at | date:'mediumDate'}}</td>
+                                                      <!-- <td>
+                                                            <div class="form-check form-switch ct_switch">
+                                                                  <input class="form-check-input" type="checkbox"
+                                                                        role="switch" id="flexSwitchCheckDefault">
+                                                            </div>
+                                                      </td> -->
+                                                      <td>
+                                                            <div class="d-flex gap-2">
+                                                                  <i routerLink="/tags/tags-form"
+                                                                        [queryParams]="{id : item.id}"
+                                                                        class="fa-regular fa-edit">
+                                                                  </i>
+                                                                  <i (click)="openModal(item.id)"
+                                                                        class="fa-solid fa-trash">
+                                                                  </i>
+                                                            </div>
+                                                      </td>
+                                                </tr>
+                                                }
+                                          </tbody>
+                                    </table>
+                              </div>
+                              <!-- Pagination Controls -->
+                              <div class="d-flex justify-content-between align-items-center mt-3">
+                                    <div>
+                                          <label for="pageSize">Items per page: </label>
+                                          <select id="pageSize" [(ngModel)]="pageSize"
+                                                (change)="changePageSize(pageSize)">
+                                                <option *ngFor="let size of pageSizeOptions" [value]="size">{{ size }}
+                                                </option>
+                                          </select>
+                                    </div>
+
+                                    <!-- Pagination -->
+                                    <nav aria-label="Table pagination">
+                                          <ul class="pagination">
+                                                <li class="page-item" [class.disabled]="currentPage === 1">
+                                                      <a class="page-link"
+                                                            (click)="changePage(currentPage - 1)">Previous</a>
+                                                </li>
+                                                <li class="page-item" [class.disabled]="currentPage === totalPages">
+                                                      <a class="page-link"
+                                                            (click)="changePage(currentPage + 1)">Next</a>
+                                                </li>
+                                          </ul>
+                                    </nav>
+                              </div>
+                              <app-model #modal (confirmed)="onModalConfirm()">
+                              </app-model>
+                        </div>
+                  </div>
+            </div>
+      </div>
+</div>
+<!-- <app-loader *ngIf="loading"></app-loader> -->

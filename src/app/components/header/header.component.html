@@ -1,0 +1,21 @@
+<header>
+      <div class="d-flex align-items-center gap-2">
+            <i class="fa-solid fa-bars me-3 ct_fs_18 ct_menu_bar"></i>
+            <h4 class="ct_fs_26 ct_fw_600 mb-0">Dashboard</h4>
+      </div>
+      <div class="ct_right_dropdown dropdown">
+            <button id="dropdownMenuButton" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
+                  <div class="d-flex align-items-center gap-2">
+                        <img src="assets/img/men_profile.png" alt="">
+                        <p class="mb-0 ct_fw_500">John Doe</p>
+                  </div>
+                  <i class="fa-solid fa-ellipsis-vertical ms-auto"></i>
+            </button>
+            <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+                  <li><a class="dropdown-item" href="edit-profile.html">My Profile</a></li>
+                  <li><a class="dropdown-item" href="change-password.html">Change Password</a></li>
+                  <li><a class="dropdown-item" (click)="logout()" data-bs-toggle="modal"
+                              data-bs-target="#ct_logout_modal_post">Log Out</a></li>
+            </ul>
+      </div>
+</header>
