@@ -27,15 +27,17 @@ export class SubCategoryListComponent {
     private router: Router
   ) { }
 
+  searchQuery: any = '';
+
   ngOnInit() {
     this.getCategories()
   }
 
   getCategories() {
     this.loading = true
-    let apiUrl = `subcategory/get-all/?page=${this.currentPage}&limit=${this.pageSize}`
+    let apiUrl = `subcategory/get-all/?page=${this.currentPage}&limit=${this.pageSize}&search=${this.searchQuery}`
     this.service.get(apiUrl).subscribe(res => {
-      if (res.success) {
+      if (res.status == 200) {
         this.data = res.subcategoryAll
         this.totalPages = res.pagination.totalPages
         this.loading = false

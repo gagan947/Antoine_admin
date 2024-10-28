@@ -5,7 +5,7 @@
                   <div class="col-md-12">
                         <div class="text-end mb-4">
                               <a routerLink="/tags/tags-form" class="ct_blue_btn">
-                                    + Add New
+                                    + Add Tag
                               </a>
                         </div>
                         <div class="ct_light_blue_bg">
@@ -14,20 +14,12 @@
                                     <div class="ct_right_filter_main">
                                           <div class="ct_search">
                                                 <input type="text" class="form-control" style="padding-right: 34px;"
-                                                      placeholder="Search Tag">
+                                                      placeholder="Search Tag" [(ngModel)]="searchQuery"
+                                                      (ngModelChange)="getTags()">
                                                 <i class="fa-solid fa-magnifying-glass"></i>
 
                                           </div>
-                                          <div class="w-100">
-                                                <select class="form-control">
-                                                      <option value="">Block</option>
-                                                      <option value="">Block</option>
-                                                      <option value="">Block</option>
-                                                </select>
-                                          </div>
-                                          <div class="w-100">
-                                                <input type="date" class="form-control">
-                                          </div>
+                                         
                                     </div>
                               </div>
                               <div class="table-responsive ct_mt_40">
@@ -66,6 +58,9 @@
                                                 </tr>
                                                 }
                                           </tbody>
+                                          <div *ngIf="data?.length == 0 || !data" class="text-center">
+                                                <p class="ct_fs_15 mt-5">No items found</p>
+                                          </div>
                                     </table>
                               </div>
                               <!-- Pagination Controls -->

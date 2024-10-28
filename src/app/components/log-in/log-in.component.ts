@@ -12,6 +12,7 @@ import { ToastrService } from 'ngx-toastr';
 export class LogInComponent {
   logInForm: FormGroup
   showPassword: boolean = false
+  loading: boolean = false;
 
   constructor(
     private fb: FormBuilder,
@@ -31,18 +32,20 @@ export class LogInComponent {
     if (form.invalid) {
       return
     }
-
+    this.loading = true;
     let apiUrl = `user/signin`
     let formData = new URLSearchParams()
     formData.set('email', form.value.email)
     formData.set('password', form.value.password)
     this.service.post(apiUrl, formData.toString()).subscribe(res => {
       if (res.success) {
+        this.loading = false;
         this.toastr.success(res.message)
         this.service.setToken(res.login_token)
         this.router.navigate(['/dashboard'])
       } else {
         this.toastr.error(res.message)
+        this.loading = false;
       }
     })
   }

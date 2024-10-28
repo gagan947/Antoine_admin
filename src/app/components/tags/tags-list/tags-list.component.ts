@@ -25,20 +25,22 @@ export class TagsListComponent {
     private service: SharedService,
   ) { }
 
+  searchQuery: any = '';
+
   ngOnInit() {
     this.getTags()
   }
 
   getTags() {
     this.loading = true
-    let apiUrl = `tag/get-all/?page=${this.currentPage}&limit=${this.pageSize}`
+    let apiUrl = `tag/get-all/?page=${this.currentPage}&limit=${this.pageSize}&search=${this.searchQuery}`
     this.service.get(apiUrl).subscribe(res => {
-      if (res.success) {
+      if (res.status == 200) {
         this.data = res.tagAll
         this.totalPages = res.pagination.totalPages
         this.loading = false
       } else {
-        this.toastr.error(res.message)
+        //this.toastr.error(res.message)
         this.loading = false
       }
     })

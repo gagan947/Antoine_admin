@@ -6,11 +6,11 @@
                         <div class="form-group mb-3">
                               <label for="" class="ct_fw_600 mb-2">Category Name<span
                                           class="ct_red_star">*</span></label>
-                              <input type="text" class="form-control ct_input" formControlName="name">
+                              <input type="text" class="form-control ct_input" formControlName="name" placeholder="Enter here...">
                               <p *ngIf="
                               form.controls['name'].errors &&
                               form.controls['name'].touched
-                            " class="err_msg">
+                            " class="err_msg" >
                                     {{ getErrorMessage('name') }}
                                     <svg width="13" height="13" viewBox="0 0 17 17" fill="none"
                                           xmlns="http://www.w3.org/2000/svg">
