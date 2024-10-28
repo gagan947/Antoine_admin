@@ -27,20 +27,23 @@ export class CategoryListComponent {
     private router: Router
   ) { }
 
+  searchQuery: any = '';
+  
   ngOnInit() {
     this.getCategories()
   }
 
   getCategories() {
     this.loading = true
-    let apiUrl = `category/get-all/?page=${this.currentPage}&limit=${this.pageSize}`
+    let apiUrl = `category/get-all/?page=${this.currentPage}&limit=${this.pageSize}&search=${this.searchQuery}`
     this.service.get(apiUrl).subscribe(res => {
-      if (res.success) {
+      if (res.status == 200) {
+        debugger
         this.data = res.categoryAll
         this.totalPages = res.pagination.totalPages
         this.loading = false
       } else {
-        this.toastr.error(res.message)
+        //this.toastr.error(res.message)
         this.loading = false
       }
     })

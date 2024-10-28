@@ -24,14 +24,16 @@ export class UserListComponent {
     private router: Router
   ) { }
 
+  searchQuery: any = '';
+
   ngOnInit() {
     this.getUsers()
   }
 
   getUsers() {
-    let apiUrl = `user/get-alluser?page=${this.currentPage}&limit=${this.pageSize}`
+    let apiUrl = `user/get-alluser?page=${this.currentPage}&limit=${this.pageSize}&search=${this.searchQuery}`
     this.service.get(apiUrl).subscribe(res => {
-      if (res.success) {
+      if (res.status == 200) {
         this.data = res.allUsers
         this.totalPages = res.pagination.totalPages
       } else {
