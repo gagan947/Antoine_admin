@@ -1,16 +1,17 @@
 <div class="ct_right_panel">
-      <h4 class="ct_fw_700 ct_fs_36">Add Category</h4>
+      <h4 class="ct_fw_700 ct_fs_36">{{paramId ? 'Update' : 'Add'}} Category</h4>
       <form [formGroup]="form" (ngSubmit)="onSubmit(form)" class="mt-4">
             <div class="row">
                   <div class="col-lg-6">
                         <div class="form-group mb-3">
-                              <label for="" class="ct_fw_600 mb-2">Category Name<span
+                              <label for="" class="ct_fw_600 mb-2">Category Name <span
                                           class="ct_red_star">*</span></label>
-                              <input type="text" class="form-control ct_input" formControlName="name" placeholder="Enter here...">
+                              <input type="text" class="form-control ct_input" formControlName="name"
+                                    placeholder="Enter here...">
                               <p *ngIf="
                               form.controls['name'].errors &&
                               form.controls['name'].touched
-                            " class="err_msg" >
+                            " class="err_msg">
                                     {{ getErrorMessage('name') }}
                                     <svg width="13" height="13" viewBox="0 0 17 17" fill="none"
                                           xmlns="http://www.w3.org/2000/svg">

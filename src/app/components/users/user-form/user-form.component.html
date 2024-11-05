@@ -1,12 +1,12 @@
 <div class="ct_right_panel">
-      <h4 class="ct_fw_700 ct_fs_36">Add User</h4>
+      <h4 class="ct_fw_700 ct_fs_36">{{paramId ? 'Update' : 'Add'}} User</h4>
       <form [formGroup]="form" (ngSubmit)="onSubmit(form)" class="mt-4">
             <div class="row">
                   <div class="col-lg-6">
                         <div class="form-group mb-3">
                               <label for="" class="ct_fw_600 mb-2">Name <span class="ct_red_star">*</span></label>
-                              <input type="text" class="form-control ct_input" placeholder="John"
-                                    formControlName="name" placeholder="Enter here...">
+                              <input type="text" class="form-control ct_input" placeholder="John" formControlName="name"
+                                    placeholder="Enter here...">
                               <p *ngIf="
                               form.controls['name'].errors &&
                               form.controls['name'].touched
@@ -40,7 +40,7 @@
                   </div>
                   <div class="col-lg-6">
                         <div class="form-group mb-3">
-                              <label for="" class="ct_fw_600 mb-2">Phone</label>
+                              <label for="" class="ct_fw_600 mb-2">Phone <span class="ct_red_star">*</span></label>
                               <ngx-intl-tel-input [cssClass]="'ct_input form-control full_width ps-5'"
                                     [enableAutoCountrySelect]="false" [enablePlaceholder]="true"
                                     [searchCountryFlag]="true"
@@ -86,6 +86,7 @@
                         <div class="form-group mb-3">
                               <label for="" class="ct_fw_600 mb-2">Role <span class="ct_red_star">*</span></label>
                               <select class="form-control ct_input" formControlName="role">
+                                    <option value="" disabled selected>-- Select --</option>
                                     <option value="1">Sub Admin</option>
                                     <option value="2">Collaborator</option>
                                     <option value="3">User</option>

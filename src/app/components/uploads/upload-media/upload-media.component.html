@@ -4,13 +4,13 @@
             <div class="row">
                   <div class="col-lg-6">
                         <div class="form-group mb-3">
-                              <label for="" class="ct_fw_600 mb-2">Media<span class="ct_red_star">*</span></label>
+                              <label for="" class="ct_fw_600 mb-2">Media <span class="ct_red_star">*</span></label>
                               <input type="file" class="form-control ct_input" (change)="ngFileInputChange($event)"
                                     formControlName="name">
                               <p *ngIf="
                               form.controls['name'].errors &&
                               form.controls['name'].touched
-                              "class="err_msg">
+                              " class="err_msg">
                                     {{ getErrorMessage('name') }}
                                     <svg width="13" height="13" viewBox="0 0 17 17" fill="none"
                                           xmlns="http://www.w3.org/2000/svg">
@@ -24,7 +24,7 @@
                   <!-- Category & Sub Category -->
 
                   <div class="col-lg-6">
-                        <label for="" class="ct_fw_600 mb-2">Category & Sub Category<span
+                        <label for="" class="ct_fw_600 mb-2">Category & Sub Category <span
                                     class="ct_red_star">*</span></label>
                         <div class="multi-select-container">
                               <div class="form-control ct_input" (click)="toggleCatDropdown(true)">
@@ -68,14 +68,17 @@
                                                 </ul>
                                           </div>
                                     </ng-container>
+                                    <div *ngIf="filteredCatOptions?.length == 0 || !filteredCatOptions"
+                                          class="text-center">
+                                          <p class="ct_fs_15 mt-5">No items found</p>
+                                    </div>
                               </div>
                         </div>
                   </div>
             </div>
 
-
             <div class="col-lg-6">
-                  <label for="" class="ct_fw_600 mb-2">Tags<span class="ct_red_star">*</span></label>
+                  <label for="" class="ct_fw_600 mb-2">Tags <span class="ct_red_star">*</span></label>
                   <div class="multi-select-container">
                         <div class="form-control ct_input" (click)="toggleDropdown(true)">
                               <ng-container *ngIf="selectedItems.length > 0 ;else default">
@@ -95,6 +98,9 @@
                                     <li *ngFor="let option of filteredOptions" (click)="selectItem(option)">
                                           {{ option.tag }}
                                     </li>
+                                    <div *ngIf="filteredOptions?.length == 0 || !filteredOptions" class="text-center">
+                                          <p class="ct_fs_15 mt-5">No items found</p>
+                                    </div>
                               </ul>
                         </div>
                   </div>

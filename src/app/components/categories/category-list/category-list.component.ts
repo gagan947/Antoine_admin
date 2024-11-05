@@ -28,7 +28,7 @@ export class CategoryListComponent {
   ) { }
 
   searchQuery: any = '';
-  
+
   ngOnInit() {
     this.getCategories()
   }
@@ -38,7 +38,6 @@ export class CategoryListComponent {
     let apiUrl = `category/get-all/?page=${this.currentPage}&limit=${this.pageSize}&search=${this.searchQuery}`
     this.service.get(apiUrl).subscribe(res => {
       if (res.status == 200) {
-        debugger
         this.data = res.categoryAll
         this.totalPages = res.pagination.totalPages
         this.loading = false

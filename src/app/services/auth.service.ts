@@ -1,7 +1,7 @@
-import { HttpClient, HttpHeaders } from '@angular/common/http'
+import { HttpClient, HttpErrorResponse, HttpHeaders } from '@angular/common/http'
 import { Injectable } from '@angular/core'
 import { Router } from '@angular/router'
-import { BehaviorSubject, Observable } from 'rxjs'
+import { BehaviorSubject, catchError, Observable, throwError } from 'rxjs'
 import { environment } from '../../environments/environment.development'
 
 
@@ -38,12 +38,26 @@ export class AuthService {
     const headers = new HttpHeaders()
       .set('content-type', 'application/x-www-form-urlencoded')
       .set('Access-Control-Allow-Origin', '*')
-    return this.http.post<any>(this.baseUrl + url, data, { headers: headers })
+    return this.http.post<any>(this.baseUrl + url, data, { headers: headers }).pipe(
+      catchError(this.handleError)
+    );
   }
 
   logout(): void {
     localStorage.clear()
     this.updateAuthState(false)
     this.route.navigate(['/'])
+  }
+
+  private handleError(error: HttpErrorResponse) {
+    let errorMessage = 'Unknown error occurred!';
+
+    if (error.error instanceof ErrorEvent) {
+      errorMessage = `Error: ${error.error.message}`;
+    } else {
+      errorMessage = `${error.error.message || error.message}`;
+    }
+
+    return throwError(() => new Error(errorMessage));
   }
 }

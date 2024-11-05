@@ -19,7 +19,7 @@
                                                 <i class="fa-solid fa-magnifying-glass"></i>
 
                                           </div>
-                                         
+
                                     </div>
                               </div>
                               <div class="table-responsive ct_mt_40">
@@ -35,7 +35,7 @@
                                           <tbody>
                                                 @for (item of data; track $index) {
                                                 <tr>
-                                                      <td>{{$index + 1}}</td>
+                                                      <td>{{ (currentPage - 1) * pageSize + $index + 1 }}</td>
                                                       <td>{{item.tag}}</td>
                                                       <td>{{item.created_at | date:'mediumDate'}}</td>
                                                       <!-- <td>
@@ -58,10 +58,11 @@
                                                 </tr>
                                                 }
                                           </tbody>
-                                          <div *ngIf="data?.length == 0 || !data" class="text-center">
-                                                <p class="ct_fs_15 mt-5">No items found</p>
-                                          </div>
                                     </table>
+                                    <div *ngIf="data?.length == 0 || !data" class="text-center">
+                                          <p class="ct_fs_15 mt-5">No items found</p>
+                                    </div>
+
                               </div>
                               <!-- Pagination Controls -->
                               <div class="d-flex justify-content-between align-items-center mt-3">

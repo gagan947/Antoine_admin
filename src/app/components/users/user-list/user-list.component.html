@@ -18,7 +18,7 @@
                                                       placeholder="Search User" [(ngModel)]="searchQuery"
                                                       (ngModelChange)="getUsers()">
                                                 <i class="fa-solid fa-magnifying-glass"></i>
-                                          </div>                                         
+                                          </div>
                                     </div>
                               </div>
                               <div class="table-responsive ct_mt_40">
@@ -27,8 +27,8 @@
                                                 <tr>
                                                       <th>S.No</th>
                                                       <th>Name</th>
-                                                      <th>Email</th>
                                                       <th>Phone</th>
+                                                      <th>Email</th>
                                                       <th>Role</th>
                                                       <th>Permissions</th>
                                                       <th>Status</th>
@@ -38,11 +38,11 @@
                                           <tbody>
                                                 @for (item of data; track $index) {
                                                 <tr>
-                                                      <td>{{$index + 1}}</td>
+                                                      <td>{{ (currentPage - 1) * pageSize + $index + 1 }}</td>
                                                       <td>{{item.name}}</td>
                                                       <td>{{item.phone}}</td>
                                                       <td>{{item.email}}</td>
-                                                      <td>{{item.role}}</td>
+                                                      <td>{{getRoleLabel(item.role)}}</td>
                                                       <td>{{ formatPermissions(item.permission) }}</td>
                                                       <td>
                                                             <div class="form-check form-switch ct_switch">
@@ -66,10 +66,10 @@
                                                 </tr>
                                                 }
                                           </tbody>
-                                          <div *ngIf="data?.length == 0 || !data" class="text-center">
-                                                <p class="ct_fs_15 mt-5">No items found</p>
-                                          </div>
                                     </table>
+                                    <div *ngIf="data?.length == 0 || !data" class="text-center">
+                                          <p class="ct_fs_15 mt-5">No items found</p>
+                                    </div>
                               </div>
 
                               <!-- Pagination Controls -->

@@ -55,7 +55,8 @@
                                     <div class="form-group mb-3">
                                           <label for="" class="ct_fw_600 mb-2">Email <span
                                                       class="ct_red_star">*</span></label>
-                                          <input type="text" class="form-control ct_input" formControlName="email">
+                                          <input type="text" class="form-control ct_input"
+                                                placeholder="Enter Your Email" formControlName="email">
                                           <p *ngIf="
                                           logInForm.controls['email'].errors &&
                                           logInForm.controls['email'].touched
@@ -73,7 +74,8 @@
                                                       class="ct_red_star">*</span></label>
                                           <div class="position-relative">
                                                 <input [type]="showPassword ? 'text':'password'"
-                                                      class="form-control ct_input" formControlName="password">
+                                                      placeholder="Enter Your Password" class="form-control ct_input"
+                                                      formControlName="password">
                                                 <i [ngClass]="showPassword ? 'fa-eye':'fa-eye-slash'"
                                                       (click)="showPassword = !showPassword"
                                                       class="fa-regular ct_show_eye"></i>

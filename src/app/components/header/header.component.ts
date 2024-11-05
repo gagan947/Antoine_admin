@@ -7,8 +7,10 @@ import { Router } from '@angular/router';
   styleUrl: './header.component.css'
 })
 export class HeaderComponent {
+  userData: any;
   constructor(private router: Router) {
-
+    const userData: any = localStorage.getItem('userData')
+    this.userData = JSON.parse(userData)
   }
   logout() {
     localStorage.clear()

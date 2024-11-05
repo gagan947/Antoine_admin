@@ -14,7 +14,7 @@
                                     <div class="ct_right_filter_main">
                                           <div class="ct_search">
                                                 <input type="text" class="form-control" style="padding-right: 34px;"
-                                                      placeholder="Search Category" [(ngModel)]="searchQuery"
+                                                      placeholder="Search Sub Category" [(ngModel)]="searchQuery"
                                                       (ngModelChange)="getCategories()">
                                                 <i class="fa-solid fa-magnifying-glass"></i>
 
@@ -36,7 +36,7 @@
                                           <tbody>
                                                 @for (item of data; track $index) {
                                                 <tr>
-                                                      <td>{{$index + 1}}</td>
+                                                      <td>{{ (currentPage - 1) * pageSize + $index + 1 }}</td>
                                                       <td>{{item.subcategory_name}}</td>
                                                       <td>{{item.category_name}}</td>
                                                       <td>{{item.created_at | date:'mediumDate'}}</td>
@@ -60,10 +60,10 @@
                                                 </tr>
                                                 }
                                           </tbody>
-                                          <div *ngIf="data?.length == 0 || !data" class="text-center">
-                                                <p class="ct_fs_15 mt-5">No items found</p>
-                                          </div>
                                     </table>
+                                    <div *ngIf="data?.length == 0 || !data" class="text-center">
+                                          <p class="ct_fs_15 mt-5">No items found</p>
+                                    </div>
                               </div>
                               <!-- Pagination Controls -->
                               <div class="d-flex justify-content-between align-items-center mt-3">

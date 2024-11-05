@@ -73,7 +73,6 @@ export class UserListComponent {
 
     item.status = item.status === '1' ? '0' : '1';
     let apiUrl = `user/update-status`
-
     let formData = new URLSearchParams()
     formData.set('id', item.id)
     formData.set('status', item.status)
@@ -85,5 +84,18 @@ export class UserListComponent {
         this.toastr.error(res.message)
       }
     })
+  }
+
+  getRoleLabel(id: any): string {
+    switch (id) {
+      case '1':
+        return 'Sub Admin'
+      case '2':
+        return 'Collaborator'
+      case '3':
+        return 'User'
+      default:
+        return 'Unknown'
+    }
   }
 }
