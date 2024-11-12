@@ -3,7 +3,7 @@
       <div class="container-fluid">
             <div class="row">
                   <div class="col-md-12">
-                        <div class="text-end mb-4">
+                        <div *ngIf="permissionObject.CT" class="text-end mb-4">
                               <a routerLink="/tags/tags-form" class="ct_blue_btn">
                                     + Add Tag
                               </a>
@@ -46,11 +46,13 @@
                                                       </td> -->
                                                       <td>
                                                             <div class="d-flex gap-2">
-                                                                  <i routerLink="/tags/tags-form"
+                                                                  <i *ngIf="permissionObject.CT"
+                                                                        routerLink="/tags/tags-form"
                                                                         [queryParams]="{id : item.id}"
                                                                         class="fa-regular fa-edit">
                                                                   </i>
-                                                                  <i (click)="openModal(item.id)"
+                                                                  <i *ngIf="userData.role == '0'"
+                                                                        (click)="openModal(item.id)"
                                                                         class="fa-solid fa-trash">
                                                                   </i>
                                                             </div>

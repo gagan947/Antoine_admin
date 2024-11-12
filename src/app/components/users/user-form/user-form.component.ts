@@ -4,7 +4,7 @@ import { CountryISO, SearchCountryField } from 'ngx-intl-tel-input-gg';
 import { ToastrService } from 'ngx-toastr';
 import { AuthService } from '../../../services/auth.service';
 import { ActivatedRoute, Router } from '@angular/router';
-import { strongPasswordValidator } from '../../../validators';
+import { NoWhitespaceDirective, strongPasswordValidator } from '../../../validators';
 import { SharedService } from '../../../services/shared.service';
 
 @Component({
@@ -20,6 +20,7 @@ export class UserFormComponent {
   showPassword: boolean = false
   showConfPassword: boolean = false
   paramId: any;
+  selectedUser: any;
 
   constructor(
     private fb: FormBuilder,
@@ -30,15 +31,18 @@ export class UserFormComponent {
     private route: ActivatedRoute
   ) {
     this.form = this.fb.group({
-      name: ['', [Validators.required]],
+      name: ['', [Validators.required, NoWhitespaceDirective.validate]],
       email: ['', [Validators.required, Validators.email]],
       phone: ['', [Validators.required]],
       role: ['', [Validators.required]],
       password: ['', [Validators.required, Validators.minLength(8), strongPasswordValidator]],
       CA: [false],
       HA: [false],
-      DA: [false],
-      CL: [false],
+      CT: [false],
+      UI: [false],
+      AR: [false],
+      AC: [false],
+      DNI: [false],
       HIP: [false]
     });
 
@@ -63,16 +67,20 @@ export class UserFormComponent {
     const permissions: any = [
       { CA: form.value.CA },
       { HA: form.value.HA },
-      { DA: form.value.DA },
-      { CL: form.value.CL },
+      { CT: form.value.CT },
+      { UI: form.value.UI },
+      { AR: form.value.AR },
+      { AC: form.value.AC },
+      { DNI: form.value.DNI },
       { HIP: form.value.HIP }
     ];
+
 
     let formData = new URLSearchParams()
     formData.set('name', form.value.name)
     formData.set('email', form.value.email)
     formData.set('password', form.value.password)
-    formData.set('phone', form.value.phone.number)
+    formData.set('phone', form.value.phone.e164Number)
     formData.set('role', form.value.role)
     formData.set('permission', JSON.stringify(permissions))
 
@@ -91,6 +99,7 @@ export class UserFormComponent {
     } else {
       apiUrl = `user/singup`
 
+      formData.set('verify_status', '1')
       this.service.post(apiUrl, formData.toString()).subscribe(res => {
         if (res.success) {
           this.toastr.success(res.message)
@@ -147,6 +156,7 @@ export class UserFormComponent {
           return { ...acc, ...permission };
         }, {})
 
+        this.selectedUser = data.role
         this.form.patchValue(
           {
             name: data.name,
@@ -156,14 +166,20 @@ export class UserFormComponent {
             role: data.role,
             CA: permissionObject.CA || false,
             HA: permissionObject.HA || false,
-            DA: permissionObject.DA || false,
-            CL: permissionObject.CL || false,
+            CT: permissionObject.CT || false,
+            UI: permissionObject.UI || false,
+            AR: permissionObject.AR || false,
+            AC: permissionObject.AC || false,
+            DNI: permissionObject.DNI || false,
             HIP: permissionObject.HIP || false
-          }
-        )
+          })
       } else {
         this.toastr.error(res.message)
       }
     })
+  }
+
+  userRoleChange(event: any) {
+    this.selectedUser = event.target.value
   }
 }

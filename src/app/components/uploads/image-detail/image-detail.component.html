@@ -1,0 +1,55 @@
+<div class="ct_right_panel">
+      <h4 class="ct_fw_700 ct_fs_36">Image Detail</h4>
+      <div class="item">
+            <div class="srtudio_bg_345">
+                  <div class="ct_studio_img_456">
+                        <img [src]="data?.image" alt="" class="image">
+                        <p class="mb-0 text-center mt-3"><a>{{data?.image_name}}</a>
+                        </p>
+                  </div>
+                  <div class="ct_studio_card_456">
+                        <ul>
+                              <li>
+                                    <h4>Author</h4>
+                                    <p class="mb-0">{{data?.author_name}}</p>
+                              </li>
+                              <li>
+                                    <h4>Created on</h4>
+                                    <p class="mb-0">{{data?.created_on}}
+                                    </p>
+                              </li>
+                              <li>
+                                    <h4>Dimensions</h4>
+                                    <p class="mb-0">{{data?.dimensions}} </p>
+                              </li>
+                              <li>
+                                    <h4>File</h4>
+                                    <p class="mb-0">{{data?.file}} </p>
+                              </li>
+                              <li>
+                                    <h4>Tags</h4>
+                                    <p class="mb-0">
+                                          <span *ngFor="let tag of data?.tags; let i=index">
+                                                {{tag?.tag}},
+                                          </span>
+                                    </p>
+                              </li>
+                              <li>
+                                    <h4>Albums</h4>
+                                    <ul>
+                                          @for (item of data?.sub_album; track $index) {
+                                          <li> <a class="" routerLink="/sub-categories"
+                                                      [queryParams]="{id : item?.category_id}">{{item.category_name
+                                                      | uppercase}}</a> /
+                                                <a class="" routerLink="/sub-album"
+                                                      [queryParams]="{cat_id : item?.category_id, id : item?.subcategory_id}">{{item.subcategory_name
+                                                      | uppercase}}</a>
+                                          </li>
+                                          }
+                                    </ul>
+                              </li>
+                        </ul>
+                  </div>
+            </div>
+      </div>
+</div>

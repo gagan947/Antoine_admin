@@ -1,0 +1,16 @@
+.custom_select {
+      border: navajowhite;
+      background: #e8f0fc;
+      padding: 4px;
+      border-radius: 5px;
+}
+
+.custom_select:focus {
+      outline: none;
+}
+
+.custom_status {
+      background: #b7e8e0;
+      padding: 4px 10px;
+      border-radius: 5px;
+}

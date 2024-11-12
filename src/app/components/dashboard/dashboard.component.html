@@ -5,7 +5,8 @@
                   <div class="col-lg-6 col-md-6 mb-4">
                         <div class="ct_dash_card" style="background-color: #4A90E21A;">
                               <div class="ct_card_title">
-                                    <h2 class="ct_fs_48 ct_mb_16 ct_fw_600" style="color: #4A90E2;">2.80M</h2>
+                                    <h2 class="ct_fs_48 ct_mb_16 ct_fw_600" style="color: #4A90E2;">
+                                          {{data?.approvedUserCount}}</h2>
                                     <p class="mb-0  ct_fs_18">Total Users</p>
                               </div>
                               <div class="ct_card_icon" style="  background-color: #4A90E2;">
@@ -21,8 +22,9 @@
                   <div class="col-lg-6 col-md-6 mb-4">
                         <div class="ct_dash_card" style="background-color: #50E3C21A;">
                               <div class="ct_card_title">
-                                    <h2 class="ct_fs_48 ct_mb_16 ct_fw_600" style="color: #50E3C2;">2,318</h2>
-                                    <p class="mb-0  ct_fs_18">Total Posts</p>
+                                    <h2 class="ct_fs_48 ct_mb_16 ct_fw_600" style="color: #50E3C2;">{{data?.postCount}}
+                                    </h2>
+                                    <p class="mb-0  ct_fs_18">Total Images</p>
                               </div>
                               <div class="ct_card_icon" style="  background-color: #50E3C2;">
                                     <svg width="22" height="22" viewBox="0 0 22 22" fill="none"
@@ -46,150 +48,69 @@
 
             <div class="row ct_mt_50">
                   <div class="col-md-12">
-
                         <div class="ct_light_blue_bg">
                               <div class="ct_flex_2">
-                                    <h2 class="ct_fs_18 ct_fw_600">List of users</h2>
+                                    <h2 class="ct_fs_18 ct_fw_600">User Request List</h2>
                               </div>
                               <div class="table-responsive ct_mt_40">
                                     <table class="table ct_custom_table">
                                           <thead>
                                                 <tr>
                                                       <th>S.No</th>
-                                                      <th>User Name</th>
+                                                      <th>Name</th>
                                                       <th>Phone</th>
-                                                      <th>Emails</th>
-                                                      <th>Joined Date</th>
-                                                      <th>Block User</th>
-                                                      <th>Actions</th>
+                                                      <th>Email</th>
+                                                      <th>Role</th>
+                                                      <th>Status</th>
+                                                      <!-- <th>Actions</th> -->
                                                 </tr>
                                           </thead>
                                           <tbody>
+                                                @for (item of data?.findAllPendingUsers; track $index) {
                                                 <tr>
-                                                      <td>1</td>
-                                                      <td>Mehek Nanwani</td>
-                                                      <td>+1 93072059670</td>
-                                                      <td>macster&#64;prettysky.link</td>
-                                                      <td>2/1/2024</td>
+                                                      <td>{{$index + 1 }}</td>
+                                                      <td>{{item.name}}</td>
+                                                      <td>{{item.phone}}</td>
+                                                      <td>{{item.email}}</td>
+                                                      <td>{{getRoleLabel(item.role)}}</td>
+                                                      <!-- <td>{{ formatPermissions(item.permission) }}</td> -->
                                                       <td>
-                                                            <div class="form-check form-switch ct_switch">
-                                                                  <input class="form-check-input" type="checkbox"
-                                                                        role="switch" id="flexSwitchCheckDefault">
-                                                            </div>
+                                                            <ng-container
+                                                                  *ngIf="item.verify_status == '0'; else default">
+                                                                  <select [disabled]="!permissionObject.AR"
+                                                                        class="custom_select"
+                                                                        (change)="changeStatus($event,item.id)">
+                                                                        <option value="0">Pending</option>
+                                                                        <option value="1">Approve</option>
+                                                                        <option value="2">Disapprove</option>
+                                                                  </select>
+                                                            </ng-container>
+
+                                                            <ng-template #default>
+                                                                  <span class="custom_status">Approved</span>
+                                                            </ng-template>
                                                       </td>
-                                                      <td><i class="fa-regular fa-eye" data-bs-toggle="modal"
-                                                                  data-bs-target="#view_user"></i></td>
-                                                </tr>
-                                                <tr>
-                                                      <td>2</td>
-                                                      <td>Mehek Nanwani</td>
-                                                      <td>+1 93072059670</td>
-                                                      <td>macster&#64;prettysky.link</td>
-                                                      <td>2/1/2024</td>
-                                                      <td>
-                                                            <div class="form-check form-switch ct_switch">
-                                                                  <input class="form-check-input" type="checkbox"
-                                                                        role="switch" id="flexSwitchCheckDefault">
+
+                                                      <!-- <td>
+                                                            <div class="d-flex gap-2">
+                                                                  <i routerLink="/users/user-form"
+                                                                        [queryParams]="{id : item.id}"
+                                                                        class="fa-regular fa-edit">
+                                                                  </i>
+                                                               
                                                             </div>
-                                                      </td>
-                                                      <td><i class="fa-regular fa-eye" data-bs-toggle="modal"
-                                                                  data-bs-target="#view_user"></i></td>
+                                                      </td> -->
                                                 </tr>
-                                                <tr>
-                                                      <td>3</td>
-                                                      <td>Mehek Nanwani</td>
-                                                      <td>+1 93072059670</td>
-                                                      <td>macster&#64;prettysky.link</td>
-                                                      <td>2/1/2024</td>
-                                                      <td>
-                                                            <div class="form-check form-switch ct_switch">
-                                                                  <input class="form-check-input" type="checkbox"
-                                                                        role="switch" id="flexSwitchCheckDefault">
-                                                            </div>
-                                                      </td>
-                                                      <td><i class="fa-regular fa-eye" data-bs-toggle="modal"
-                                                                  data-bs-target="#view_user"></i></td>
-                                                </tr>
-                                                <tr>
-                                                      <td>4</td>
-                                                      <td>Mehek Nanwani</td>
-                                                      <td>+1 93072059670</td>
-                                                      <td>macster&#64;prettysky.link</td>
-                                                      <td>2/1/2024</td>
-                                                      <td>
-                                                            <div class="form-check form-switch ct_switch">
-                                                                  <input class="form-check-input" type="checkbox"
-                                                                        role="switch" id="flexSwitchCheckDefault">
-                                                            </div>
-                                                      </td>
-                                                      <td><i class="fa-regular fa-eye" data-bs-toggle="modal"
-                                                                  data-bs-target="#view_user"></i></td>
-                                                </tr>
-                                                <tr>
-                                                      <td>5</td>
-                                                      <td>Mehek Nanwani</td>
-                                                      <td>+1 93072059670</td>
-                                                      <td>macster&#64;prettysky.link</td>
-                                                      <td>2/1/2024</td>
-                                                      <td>
-                                                            <div class="form-check form-switch ct_switch">
-                                                                  <input class="form-check-input" type="checkbox"
-                                                                        role="switch" id="flexSwitchCheckDefault">
-                                                            </div>
-                                                      </td>
-                                                      <td><i class="fa-regular fa-eye" data-bs-toggle="modal"
-                                                                  data-bs-target="#view_user"></i></td>
-                                                </tr>
-                                                <tr>
-                                                      <td>6</td>
-                                                      <td>Mehek Nanwani</td>
-                                                      <td>+1 93072059670</td>
-                                                      <td>macster&#64;prettysky.link</td>
-                                                      <td>2/1/2024</td>
-                                                      <td>
-                                                            <div class="form-check form-switch ct_switch">
-                                                                  <input class="form-check-input" type="checkbox"
-                                                                        role="switch" id="flexSwitchCheckDefault">
-                                                            </div>
-                                                      </td>
-                                                      <td><i class="fa-regular fa-eye" data-bs-toggle="modal"
-                                                                  data-bs-target="#view_user"></i></td>
-                                                </tr>
-                                                <tr>
-                                                      <td>7</td>
-                                                      <td>Mehek Nanwani</td>
-                                                      <td>+1 93072059670</td>
-                                                      <td>macster&#64;prettysky.link</td>
-                                                      <td>2/1/2024</td>
-                                                      <td>
-                                                            <div class="form-check form-switch ct_switch">
-                                                                  <input class="form-check-input" type="checkbox"
-                                                                        role="switch" id="flexSwitchCheckDefault">
-                                                            </div>
-                                                      </td>
-                                                      <td><i class="fa-regular fa-eye" data-bs-toggle="modal"
-                                                                  data-bs-target="#view_user"></i></td>
-                                                </tr>
-                                                <tr>
-                                                      <td>8</td>
-                                                      <td>Mehek Nanwani</td>
-                                                      <td>+1 93072059670</td>
-                                                      <td>macster&#64;prettysky.link</td>
-                                                      <td>2/1/2024</td>
-                                                      <td>
-                                                            <div class="form-check form-switch ct_switch">
-                                                                  <input class="form-check-input" type="checkbox"
-                                                                        role="switch" id="flexSwitchCheckDefault">
-                                                            </div>
-                                                      </td>
-                                                      <td><i class="fa-regular fa-eye" data-bs-toggle="modal"
-                                                                  data-bs-target="#view_user"></i></td>
-                                                </tr>
+                                                }
                                           </tbody>
                                     </table>
+                                    <div *ngIf="data?.length == 0 || !data" class="text-center">
+                                          <p class="ct_fs_15 mt-5">No items found</p>
+                                    </div>
                               </div>
                         </div>
                   </div>
             </div>
       </div>
 </div>
+<app-loader *ngIf="loading"></app-loader>

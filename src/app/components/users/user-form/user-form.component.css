@@ -1,0 +1,7 @@
+.form-check label {
+      white-space: nowrap;
+}
+
+.checkbox_gruop {
+      flex-wrap: wrap;
+}

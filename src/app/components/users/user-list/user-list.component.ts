@@ -16,13 +16,31 @@ export class UserListComponent {
   pageSize: number = 5;
   totalPages: number = 1;
   pageSizeOptions = [5, 10, 25, 50];
+  userData: any;
+  permissionObject: any;
 
   constructor(
     private fb: FormBuilder,
     private toastr: ToastrService,
     private service: SharedService,
     private router: Router
-  ) { }
+  ) {
+    const userDataString: any = localStorage.getItem('userData');
+
+    if (userDataString) {
+      try {
+        this.userData = JSON.parse(userDataString);
+        if (this.userData.permission) {
+          const parsedPermissions = JSON.parse(this.userData.permission);
+          this.permissionObject = parsedPermissions.reduce((acc: any, curr: any) => {
+            return { ...acc, ...curr };
+          }, {});
+        }
+      } catch (error) {
+        console.error('Error parsing userData or permission', error);
+      }
+    }
+  }
 
   searchQuery: any = '';
 

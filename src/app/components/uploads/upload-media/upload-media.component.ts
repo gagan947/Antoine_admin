@@ -24,7 +24,7 @@ export class UploadMediaComponent {
     private route: ActivatedRoute
   ) {
     this.form = this.fb.group({
-      name: ['', [Validators.required]],
+      name: [''],
       category: [''],
       tags: [''],
     })
@@ -52,7 +52,6 @@ export class UploadMediaComponent {
       return
     }
 
-    console.log(55, form);
     const tags: any = this.selectedItems.map(item => item.id)
 
     const categories: any = this.selectedCatItems.map(item => ({
@@ -63,9 +62,11 @@ export class UploadMediaComponent {
     let apiUrl = ''
     let formData = new FormData()
     if (this.paramId) {
-      apiUrl = ``
-      // formData.set('category_name', form.value.name)
-      // formData.set('id', this.paramId)
+      apiUrl = `image/updateimage-byid`
+      formData.append('category', JSON.stringify(categories))
+      formData.append('file', this.uploadImg)
+      formData.append('id', this.paramId)
+      formData.append('tag_id', tags)
     } else {
       apiUrl = `image/create`
       formData.append('category', JSON.stringify(categories))
@@ -76,7 +77,7 @@ export class UploadMediaComponent {
     this.service.upload(apiUrl, formData).subscribe(res => {
       if (res.success) {
         this.toastr.success(res.message)
-        // this.router.navigate(['/categories'])
+        this.router.navigate(['/all-images'])
       } else {
         this.toastr.error(res.message)
       }
@@ -92,15 +93,39 @@ export class UploadMediaComponent {
   }
 
   getById() {
-    let apiurl = `category/get-id?id=${this.paramId}`
+    let apiurl = `image/image-profile?id=${this.paramId}`
     this.service.get(apiurl).subscribe(res => {
       if (res.success) {
-        const data = res.categoryData
-        this.form.patchValue(
-          {
-            name: data.category_name
-          }
-        )
+        const data = res.imageData.findImageProfile[0]
+
+        data.sub_album.forEach((album: any) => {
+          this.filteredCatOptions.forEach(category => {
+            if (category.id === album.category_id) {
+              category.subcategoryData.forEach((subcategory: any) => {
+                if (subcategory.id === album.subcategory_id) {
+                  subcategory.selected = true;
+                  category.selected = true
+                  const existingItem = this.selectedCatItems.find(item =>
+                    item.categoryId === category.id && item.subcategoryId === subcategory.id
+                  );
+
+                  if (!existingItem) {
+                    this.selectedCatItems.push({
+                      categoryId: category.id,
+                      subcategoryId: subcategory.id,
+                      categoryName: category.category_name,
+                      subcategoryName: subcategory.subcategory_name,
+                      selected: true
+                    });
+                  }
+                }
+              });
+            }
+          });
+        });
+
+        this.selectedItems = [...data.tags]
+
       } else {
         this.toastr.error(res.message)
       }

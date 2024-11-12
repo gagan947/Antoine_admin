@@ -19,11 +19,29 @@ export class TagsListComponent {
   pageSizeOptions = [5, 10, 25, 50];
   deleteId: any;
   loading: boolean = false
+  userData: any;
+  permissionObject: any;
 
   constructor(
     private toastr: ToastrService,
     private service: SharedService,
-  ) { }
+  ) {
+    const userDataString: any = localStorage.getItem('userData');
+
+    if (userDataString) {
+      try {
+        this.userData = JSON.parse(userDataString);
+        if (this.userData.permission) {
+          const parsedPermissions = JSON.parse(this.userData.permission);
+          this.permissionObject = parsedPermissions.reduce((acc: any, curr: any) => {
+            return { ...acc, ...curr };
+          }, {});
+        }
+      } catch (error) {
+        console.error('Error parsing userData or permission', error);
+      }
+    }
+  }
 
   searchQuery: any = '';
 
@@ -72,7 +90,9 @@ export class TagsListComponent {
       if (res.success) {
         this.data = res.message
         this.loading = false
+        this.toastr.success(res.message)
         this.getTags()
+
       } else {
         this.toastr.error(res.message)
         this.loading = false

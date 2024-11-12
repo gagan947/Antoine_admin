@@ -1,0 +1,81 @@
+<div class="ct_right_panel">
+      <app-header />
+      <div class="d-flex justify-content-between align-items-center">
+            <h4 class="ct_fw_700 ct_fs_36">All Images</h4>
+            <a *ngIf="permissionObject.UI" routerLink="/all-images/upload-media" class="ct_blue_btn mb-2">
+                  + Upload New
+            </a>
+      </div>
+      <div class="container-fluid">
+            <div class="row">
+                  <div class="col-md-12">
+                        <div class="ct_light_blue_bg">
+                              <div class="ct_flex_2">
+                                    <h2 class="ct_fs_18 ct_fw_600">Images</h2>
+                                    <div class="ct_right_filter_main">
+                                          <div class="ct_search">
+                                                <input type="text" class="form-control" style="padding-right: 34px;"
+                                                      placeholder="Search Image">
+                                                <i class="fa-solid fa-magnifying-glass"></i>
+
+                                          </div>
+
+                                          <!-- <div class="w-100">
+                                                <input type="date" class="form-control">
+                                          </div> -->
+                                    </div>
+                              </div>
+                              <div class="ct_grid_5 mt-4">
+                                    @for (item of data; track $index) {
+                                    <div class="ct_col_2 mb-4">
+                                          <div class="ct_post_card">
+                                                <figure>
+                                                      <div class="ct_post_img">
+                                                            <img [src]="item.image" alt="">
+                                                            <div class="ct_post_action_overlay">
+                                                                  <ul class="">
+                                                                        <li class="dropdown">
+                                                                              <i class="fa-solid fa-ellipsis-vertical"
+                                                                                    id="dropdownMenuButton1"
+                                                                                    data-bs-toggle="dropdown"
+                                                                                    aria-expanded="false"></i>
+                                                                              <ul class="dropdown-menu"
+                                                                                    aria-labelledby="dropdownMenuButton1">
+                                                                                    <li><a routerLink="/image-detail"
+                                                                                                [queryParams]="{id : item.id}"
+                                                                                                class="dropdown-item">View</a>
+                                                                                    </li>
+                                                                                    <li *ngIf="permissionObject.UI"><a
+                                                                                                class="dropdown-item"
+                                                                                                routerLink="/all-images/upload-media"
+                                                                                                [queryParams]="{id : item.id}">Edit</a>
+                                                                                    </li>
+                                                                                    <li *ngIf="userData.role == '0'"><a
+                                                                                                (click)="openModal(item.id)"
+                                                                                                class="dropdown-item pointer">Delete</a>
+                                                                                    </li>
+                                                                              </ul>
+                                                                        </li>
+
+                                                                        <!-- <li class="ct_delete_icon"   data-bs-toggle="modal" data-bs-target="#ct_delete_post"><i class="fa-solid fa-trash-can"></i></li> -->
+                                                                  </ul>
+                                                            </div>
+                                                      </div>
+                                                      <figcaption>
+                                                            <h4 class="ct_fs_18 ct_fw_600">{{item.image_name}}</h4>
+                                                            <p class="mb-0">{{item.created_at | date:'short'}}
+                                                            </p>
+                                                      </figcaption>
+                                                </figure>
+                                          </div>
+                                    </div>
+                                    }
+                              </div>
+                              <app-model #modal (confirmed)="onModalConfirm()">
+                              </app-model>
+                        </div>
+                  </div>
+            </div>
+      </div>
+</div>
+<!-- <app-loader *ngIf="loading"></app-loader> -->

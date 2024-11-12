@@ -5,7 +5,7 @@
             <div class="row">
                   <div class="col-md-12">
                         <div class="text-end mb-4">
-                              <a routerLink="/users/user-form" class="ct_blue_btn">
+                              <a *ngIf="userData.role == '0'" routerLink="/users/user-form" class="ct_blue_btn">
                                     + Add User
                               </a>
                         </div>
@@ -46,7 +46,8 @@
                                                       <td>{{ formatPermissions(item.permission) }}</td>
                                                       <td>
                                                             <div class="form-check form-switch ct_switch">
-                                                                  <input [checked]="item.status === '1'"
+                                                                  <input [disabled]="userData.role !== '0'"
+                                                                        [checked]="item.status === '1'"
                                                                         (change)="toggleStatus(item)"
                                                                         class="form-check-input" type="checkbox"
                                                                         role="switch" id="flexSwitchCheckDefault">
@@ -54,13 +55,16 @@
                                                       </td>
                                                       <td>
                                                             <div class="d-flex gap-2">
-                                                                  <i routerLink="/users/user-form"
+                                                                  <i *ngIf="userData.role == '0'"
+                                                                        routerLink="/users/user-form"
                                                                         [queryParams]="{id : item.id}"
                                                                         class="fa-regular fa-edit">
                                                                   </i>
-                                                                  <!-- <i (click)="openModal(item.id)"
-                                                                        class="fa-solid fa-trash">
-                                                                  </i> -->
+                                                                  <i title="view downloaded images"
+                                                                        routerLink="/users/downloaded-images"
+                                                                        [queryParams]="{id : item.id}"
+                                                                        class="fa-solid fa-eye view">
+                                                                  </i>
                                                             </div>
                                                       </td>
                                                 </tr>

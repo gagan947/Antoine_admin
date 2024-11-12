@@ -12,10 +12,25 @@ import { TagsListComponent } from './components/tags/tags-list/tags-list.compone
 import { TagsFormComponent } from './components/tags/tags-form/tags-form.component';
 import { AuthGuard } from './guards/auth.guard';
 import { UploadMediaComponent } from './components/uploads/upload-media/upload-media.component';
+import { ForgetPasswordComponent } from './components/forget-password/forget-password.component';
+import { ChangePasswordComponent } from './components/change-password/change-password.component';
+import { AllImagesComponent } from './components/uploads/all-images/all-images.component';
+import { ImageDetailComponent } from './components/uploads/image-detail/image-detail.component';
+import { DownloadedImagesComponent } from './components/users/downloaded-images/downloaded-images.component';
+import { ImagesListComponent } from './components/website/images-list/images-list.component';
+import { AddImageComponent } from './components/website/add-image/add-image.component';
+import { ImagePreviewComponent } from './components/website/image-preview/image-preview.component';
+import { CollabRequestComponent } from './components/request/collab-request/collab-request.component';
 
 const routes: Routes = [
   {
     path: '', component: LogInComponent, pathMatch: 'full'
+  },
+  {
+    path: 'forget-password', component: ForgetPasswordComponent
+  },
+  {
+    path: 'change-password', component: ChangePasswordComponent, canActivate: [AuthGuard]
   },
   {
     path: 'dashboard', component: DashboardComponent, canActivate: [AuthGuard]
@@ -25,6 +40,9 @@ const routes: Routes = [
   },
   {
     path: 'users/user-form', component: UserFormComponent, canActivate: [AuthGuard]
+  },
+  {
+    path: 'users/downloaded-images', component: DownloadedImagesComponent, canActivate: [AuthGuard]
   },
   {
     path: 'categories', component: CategoryListComponent, canActivate: [AuthGuard]
@@ -45,7 +63,25 @@ const routes: Routes = [
     path: 'tags/tags-form', component: TagsFormComponent, canActivate: [AuthGuard]
   },
   {
-    path: 'upload-media', component: UploadMediaComponent, canActivate: [AuthGuard]
+    path: 'all-images/upload-media', component: UploadMediaComponent, canActivate: [AuthGuard]
+  },
+  {
+    path: 'all-images', component: AllImagesComponent, canActivate: [AuthGuard]
+  },
+  {
+    path: 'image-detail', component: ImageDetailComponent, canActivate: [AuthGuard]
+  },
+  {
+    path: 'website', component: ImagesListComponent, canActivate: [AuthGuard]
+  },
+  {
+    path: 'website/add-new', component: AddImageComponent, canActivate: [AuthGuard]
+  },
+  {
+    path: 'website/image-preview', component: ImagePreviewComponent, canActivate: [AuthGuard]
+  },
+  {
+    path: 'collab-request', component: CollabRequestComponent, canActivate: [AuthGuard]
   },
 ];
 

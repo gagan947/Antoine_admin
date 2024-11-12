@@ -3,6 +3,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ToastrService } from 'ngx-toastr';
 import { SharedService } from '../../../services/shared.service';
 import { ActivatedRoute, Router } from '@angular/router';
+import { NoWhitespaceDirective } from '../../../validators';
 
 @Component({
   selector: 'app-category-form',
@@ -22,7 +23,7 @@ export class CategoryFormComponent {
     private route: ActivatedRoute
   ) {
     this.form = this.fb.group({
-      name: ['', [Validators.required]],
+      name: ['', [Validators.required, NoWhitespaceDirective.validate]],
     })
 
     this.route.queryParams.subscribe((params) => {

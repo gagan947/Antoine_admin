@@ -85,7 +85,8 @@
                   <div class="col-lg-6">
                         <div class="form-group mb-3">
                               <label for="" class="ct_fw_600 mb-2">Role <span class="ct_red_star">*</span></label>
-                              <select class="form-control ct_input" formControlName="role">
+                              <select class="form-control ct_input" (change)="userRoleChange($event)"
+                                    formControlName="role">
                                     <option value="" disabled selected>-- Select --</option>
                                     <option value="1">Sub Admin</option>
                                     <option value="2">Collaborator</option>
@@ -104,47 +105,69 @@
                               </p>
                         </div>
                   </div>
-                  <div class="col-lg-12">
-                        <label for="" class="ct_fw_600 mb-2">Permissions </label>
-                        <div class="d-flex align-items-center gap-3">
+                  <div *ngIf="selectedUser == '1' || selectedUser == '3'" class="col-lg-6">
+                        <label for="" class="ct_fw_600 mb-2">Permissions</label>
+                        <div class="d-flex align-items-center gap-3 checkbox_gruop">
+                              <ng-container *ngIf="selectedUser == '1'">
+                                    <div class="form-check">
+                                          <input class="form-check-input" type="checkbox" formControlName="CA"
+                                                id="Create">
+                                          <label class="form-check-label" for="Create">
+                                                Create Albums
+                                          </label>
+                                    </div>
 
-                              <div class="form-check">
-                                    <input class="form-check-input" type="checkbox" formControlName="CA" id="Create">
-                                    <label class="form-check-label" for="Create">
-                                          Create Albums
-                                    </label>
-                              </div>
-
-                              <div class="form-check">
-                                    <input class="form-check-input" type="checkbox" formControlName="HA" id="Hide">
-                                    <label class="form-check-label" for="Hide">
-                                          Hide Albums
-                                    </label>
-                              </div>
-
-                              <div class="form-check">
-                                    <input class="form-check-input" type="checkbox" formControlName="DA" id="Delete">
-                                    <label class="form-check-label" for="Delete">
-                                          Delete Albums
-                                    </label>
-                              </div>
-
-                              <div class="form-check">
-                                    <input class="form-check-input" type="checkbox" formControlName="CL"
-                                          id="Collaborate">
-                                    <label class="form-check-label" for="Collaborate">
-                                          Collaborate
-                                    </label>
-                              </div>
-
-                              <div class="form-check">
-                                    <input class="form-check-input" type="checkbox" formControlName="HIP"
-                                          id="Individual">
-                                    <label class="form-check-label" for="Individual">
-                                          Hide Individual Photo
-                                    </label>
-                              </div>
-
+                                    <div class="form-check">
+                                          <input class="form-check-input" type="checkbox" formControlName="HA"
+                                                id="Hide">
+                                          <label class="form-check-label" for="Hide">
+                                                Hide Albums
+                                          </label>
+                                    </div>
+                                    <div class="form-check">
+                                          <input class="form-check-input" type="checkbox" formControlName="CT" id="tag">
+                                          <label class="form-check-label" for="tag">
+                                                Create Tag
+                                          </label>
+                                    </div>
+                                    <div class="form-check">
+                                          <input class="form-check-input" type="checkbox" formControlName="UI"
+                                                id="upload">
+                                          <label class="form-check-label" for="upload">
+                                                Upload Image
+                                          </label>
+                                    </div>
+                                    <div class="form-check">
+                                          <input class="form-check-input" type="checkbox" formControlName="AR"
+                                                id="acceptReq">
+                                          <label class="form-check-label" for="acceptReq">
+                                                Accept User Request
+                                          </label>
+                                    </div>
+                                    <div class="form-check">
+                                          <input class="form-check-input" type="checkbox" formControlName="AC"
+                                                id="acceptCollab">
+                                          <label class="form-check-label" for="acceptCollab">
+                                                Accept Collabration
+                                          </label>
+                                    </div>
+                                    <div class="form-check">
+                                          <input class="form-check-input" type="checkbox" formControlName="HIP"
+                                                id="hip">
+                                          <label class="form-check-label" for="hip">
+                                                Hide Individual Photo
+                                          </label>
+                                    </div>
+                              </ng-container>
+                              <ng-container *ngIf="selectedUser == '3'">
+                                    <div class="form-check">
+                                          <input class="form-check-input" type="checkbox" formControlName="DNI"
+                                                id="editUser">
+                                          <label class="form-check-label" for="editUser">
+                                                Download Image
+                                          </label>
+                                    </div>
+                              </ng-container>
                         </div>
                   </div>
             </div>

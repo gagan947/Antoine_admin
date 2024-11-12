@@ -24,6 +24,16 @@ import { SubCategoryFormComponent } from './components/sub-categories/sub-catego
 import { TagsListComponent } from './components/tags/tags-list/tags-list.component';
 import { TagsFormComponent } from './components/tags/tags-form/tags-form.component';
 import { UploadMediaComponent } from './components/uploads/upload-media/upload-media.component';
+import { ForgetPasswordComponent } from './components/forget-password/forget-password.component';
+import { ChangePasswordComponent } from './components/change-password/change-password.component';
+import { AllImagesComponent } from './components/uploads/all-images/all-images.component';
+import { ImageDetailComponent } from './components/uploads/image-detail/image-detail.component';
+import { DownloadedImagesComponent } from './components/users/downloaded-images/downloaded-images.component';
+import { ImagesListComponent } from './components/website/images-list/images-list.component';
+import { AddImageComponent } from './components/website/add-image/add-image.component';
+import { ImagePreviewComponent } from './components/website/image-preview/image-preview.component';
+import { NgxEditorModule } from 'ngx-editor';
+import { CollabRequestComponent } from './components/request/collab-request/collab-request.component';
 
 @NgModule({
   declarations: [
@@ -42,7 +52,16 @@ import { UploadMediaComponent } from './components/uploads/upload-media/upload-m
     SubCategoryFormComponent,
     TagsListComponent,
     TagsFormComponent,
-    UploadMediaComponent
+    UploadMediaComponent,
+    ForgetPasswordComponent,
+    ChangePasswordComponent,
+    AllImagesComponent,
+    ImageDetailComponent,
+    DownloadedImagesComponent,
+    ImagesListComponent,
+    AddImageComponent,
+    ImagePreviewComponent,
+    CollabRequestComponent
   ],
   imports: [
     CommonModule,
@@ -53,6 +72,7 @@ import { UploadMediaComponent } from './components/uploads/upload-media/upload-m
     ReactiveFormsModule,
     HttpClientModule,
     NgxIntlTelInputModule,
+    NgxEditorModule,
     ToastrModule.forRoot()
   ],
   providers: [],

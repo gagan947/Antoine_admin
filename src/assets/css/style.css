@@ -478,7 +478,7 @@ table.table.ct_user_border_0 {
 }
 
 .ct_post_img img {
-    height: 162px;
+    height: 200px;
     border-radius: 10px;
     object-fit: cover;
     width: 100%;

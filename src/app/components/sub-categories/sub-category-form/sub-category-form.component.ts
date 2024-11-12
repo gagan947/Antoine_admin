@@ -3,6 +3,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { SharedService } from '../../../services/shared.service';
 import { ToastrService } from 'ngx-toastr';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { NoWhitespaceDirective } from '../../../validators';
 
 @Component({
   selector: 'app-sub-category-form',
@@ -22,7 +23,7 @@ export class SubCategoryFormComponent {
     private route: ActivatedRoute
   ) {
     this.form = this.fb.group({
-      name: ['', [Validators.required]],
+      name: ['', [Validators.required, NoWhitespaceDirective.validate]],
       category: ['', [Validators.required]],
     })
 
