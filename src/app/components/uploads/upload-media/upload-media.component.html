@@ -1,10 +1,11 @@
 <div class="ct_right_panel">
-      <h4 class="ct_fw_700 ct_fs_36">Upload Media</h4>
+      <h4 class="ct_fw_700 ct_fs_24 text-white">Upload Media</h4>
       <form [formGroup]="form" (ngSubmit)="onSubmit(form)" class="mt-4">
             <div class="row">
                   <div class="col-lg-6">
                         <div class="form-group mb-3">
-                              <label for="" class="ct_fw_600 mb-2">Media <span class="ct_red_star">*</span></label>
+                              <label for="" class="ct_fw_600 mb-2 text-white">Media <span
+                                          class="ct_red_star">*</span></label>
                               <input type="file" class="form-control ct_input" (change)="ngFileInputChange($event)"
                                     formControlName="name">
                         </div>
@@ -13,7 +14,7 @@
                   <!-- Category & Sub Category -->
 
                   <div class="col-lg-6">
-                        <label for="" class="ct_fw_600 mb-2">Category & Sub Category <span
+                        <label for="" class="ct_fw_600 mb-2 text-white">Category & Sub Category <span
                                     class="ct_red_star">*</span></label>
                         <div class="multi-select-container">
                               <div class="form-control ct_input" (click)="toggleCatDropdown(true)">
@@ -62,7 +63,7 @@
                                     </ng-container>
                                     <div *ngIf="filteredCatOptions?.length == 0 || !filteredCatOptions"
                                           class="text-center">
-                                          <p class="ct_fs_15">No items found</p>
+                                          <p class="ct_fs_15 text-white">No items found</p>
                                     </div>
                               </div>
                         </div>
@@ -70,7 +71,7 @@
             </div>
 
             <div class="col-lg-6">
-                  <label for="" class="ct_fw_600 mb-2">Tags <span class="ct_red_star">*</span></label>
+                  <label for="" class="ct_fw_600 mb-2 text-white">Tags <span class="ct_red_star">*</span></label>
                   <div class="multi-select-container">
                         <div class="form-control ct_input" (click)="toggleDropdown(true)">
                               <ng-container *ngIf="selectedItems.length > 0 ;else default">
