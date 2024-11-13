@@ -17,6 +17,7 @@ export class AllImagesComponent {
   deleteId: any;
   userData: any;
   permissionObject: any;
+  searchQuery: any = '';
 
   constructor(
     private service: SharedService,
@@ -46,7 +47,7 @@ export class AllImagesComponent {
 
   getImages(): void {
     this.loading = true;
-    const apiUrl = `image/getadmin-allalbums?limit=${this.limit}&offset=${this.offset}`;
+    const apiUrl = `image/getadmin-allalbums?limit=${this.limit}&offset=${this.offset}&imageSearch=${this.searchQuery}`;
 
     this.service.get(apiUrl).subscribe(res => {
       if (res.success) {
@@ -55,12 +56,19 @@ export class AllImagesComponent {
         } else {
           this.data = [...this.data, ...res.data];
         }
-        this.loading = false;
         this.offset += this.limit;
-      } else {
-        this.loading = false;
       }
+      this.loading = false;
+    }, error => {
+      this.loading = false;
+      console.error(error);
     });
+  }
+
+  search() {
+    this.offset = 0;
+    this.data = [];
+    this.getImages();
   }
 
   @HostListener('window:scroll', ['$event'])
@@ -86,11 +94,11 @@ export class AllImagesComponent {
     let apiUrl = `image/delete-byid?id=${this.deleteId}`
     this.service.delete(apiUrl).subscribe(res => {
       if (res.success) {
-        this.data = res.message
         this.loading = false
         this.toastr.success(res.message)
         this.offset = 0;
         this.limit = 10;
+        this.data = []
         this.getImages()
       } else {
         this.toastr.error(res.message)

@@ -15,6 +15,7 @@
                                     <div class="ct_right_filter_main">
                                           <div class="ct_search">
                                                 <input type="text" class="form-control" style="padding-right: 34px;"
+                                                      [(ngModel)]="searchQuery" (ngModelChange)="search()"
                                                       placeholder="Search Image">
                                                 <i class="fa-solid fa-magnifying-glass"></i>
 

@@ -1,1 +1,35 @@
-<p>image-preview works!</p>
+<div class="ct_right_panel">
+      <h4 class="ct_fw_700 ct_fs_36">Image Detail</h4>
+      <div class="item">
+            <div class="srtudio_bg_345">
+                  <div class="ct_studio_img_456">
+                        <img [src]="data?.image_url" alt="" class="image">
+                        <p class="mb-0 text-center mt-3"><a>{{data?.image_name}}</a>
+                        </p>
+                  </div>
+                  <div class="ct_studio_card_456">
+                        <ul>
+                              <li>
+                                    <h4>Created on</h4>
+                                    <p class="mb-0">{{data?.news_post_date}}
+                                    </p>
+                              </li>
+                              <li>
+                                    <h4>File</h4>
+                                    <p class="mb-0">{{data?.image}} </p>
+                              </li>
+                              <li>
+                                    <h4>Albums</h4>
+                                    <ul>
+                                          <li> <a class="">{{data.category_name
+                                                      | uppercase}}</a> / <a class="">{{data.subcategory_name
+                                                      | uppercase}}</a>
+                                          </li>
+                                    </ul>
+                              </li>
+                        </ul>
+                  </div>
+            </div>
+      </div>
+      <app-loader *ngIf="loading"></app-loader>
+</div>
