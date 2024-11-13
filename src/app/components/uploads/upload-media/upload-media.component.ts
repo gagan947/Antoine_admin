@@ -15,6 +15,7 @@ export class UploadMediaComponent {
   data: any;
   tagData: any;
   uploadImg: any;
+  uploadedImage: any;
 
   constructor(
     private fb: FormBuilder,
@@ -44,6 +45,12 @@ export class UploadMediaComponent {
 
   ngFileInputChange(e: any) {
     this.uploadImg = e.target.files[0]
+    const file = e.target.files[0];
+    const reader = new FileReader();
+    reader.onload = (e: any) => {
+      this.uploadedImage = e.target.result;
+    };
+    reader.readAsDataURL(file);
   }
 
   onSubmit(form: any) {
@@ -72,6 +79,7 @@ export class UploadMediaComponent {
       formData.append('category', JSON.stringify(categories))
       formData.append('file', this.uploadImg)
       formData.append('tag_id', tags)
+      formData.append('collaburate_status', '2')
     }
 
     this.service.upload(apiUrl, formData).subscribe(res => {
@@ -125,7 +133,7 @@ export class UploadMediaComponent {
         });
 
         this.selectedItems = [...data.tags]
-
+        this.uploadedImage = data.image;
       } else {
         this.toastr.error(res.message)
       }

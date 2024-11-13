@@ -17,7 +17,8 @@ export class AddImageComponent {
   data: any;
   subCategories: any;
   editor!: Editor;
-  selectedFiles: File[] = [];
+  uploadedImages: string[] = []; // Store the array of already uploaded image URLs
+  selectedImages: File[] = [];
   selectedType: any;
 
   constructor(
@@ -29,7 +30,7 @@ export class AddImageComponent {
   ) {
     this.form = this.fb.group({
       title: [''],
-      category: [''],
+      category: ['', Validators.required],
       sub_category: [''],
       file: [''],
       description: [''],
@@ -50,11 +51,18 @@ export class AddImageComponent {
   }
 
   onFileSelected(event: any) {
-    const files: FileList = event.target.files;
-    this.selectedFiles = [];
-
-    for (let i = 0; i < files.length; i++) {
-      this.selectedFiles.push(files[i]);
+    const input = event.target as HTMLInputElement;
+    if (input.files && input.files.length > 0) {
+      this.selectedImages = [];
+      for (let i = 0; i < input.files.length; i++) {
+        const file = input.files[i];
+        this.selectedImages.push(file);
+        const reader = new FileReader();
+        reader.onload = (e: any) => {
+          this.uploadedImages.push(e.target.result);
+        };
+        reader.readAsDataURL(file);
+      }
     }
   }
 
@@ -76,7 +84,7 @@ export class AddImageComponent {
       formData.set('website_subcategory_id', form.value.sub_category)
       formData.set('title', form.value.title)
       formData.set('description', form.value.description)
-      this.selectedFiles.forEach(file => {
+      this.selectedImages.forEach(file => {
         formData.append('file', file, file.name);
       });
     }
@@ -141,5 +149,10 @@ export class AddImageComponent {
         this.toastr.error(res.message)
       }
     })
+  }
+
+  removeImg(index: number): void {
+    this.uploadedImages.splice(index, 1);
+    this.selectedImages.splice(index, 1);
   }
 }

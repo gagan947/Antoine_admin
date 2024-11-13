@@ -88,7 +88,7 @@ export class ImagesListComponent {
 
   onModalConfirm() {
     this.loading = true
-    let apiUrl = `image/delete-byid?id=${this.deleteId}`
+    let apiUrl = `website-images/websiteImageDelete-byid?id=${this.deleteId}`
     this.service.delete(apiUrl).subscribe(res => {
       if (res.success) {
         this.data = []

@@ -79,7 +79,6 @@ export class UserFormComponent {
     let formData = new URLSearchParams()
     formData.set('name', form.value.name)
     formData.set('email', form.value.email)
-    formData.set('password', form.value.password)
     formData.set('phone', form.value.phone.e164Number)
     formData.set('role', form.value.role)
     formData.set('permission', JSON.stringify(permissions))
@@ -98,7 +97,7 @@ export class UserFormComponent {
       })
     } else {
       apiUrl = `user/singup`
-
+      formData.set('password', form.value.password)
       formData.set('verify_status', '1')
       this.service.post(apiUrl, formData.toString()).subscribe(res => {
         if (res.success) {
