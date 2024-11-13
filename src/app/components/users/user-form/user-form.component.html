@@ -1,10 +1,11 @@
 <div class="ct_right_panel">
-      <h4 class="ct_fw_700 ct_fs_36">{{paramId ? 'Update' : 'Add'}} User</h4>
+      <h4 class="ct_fw_700 ct_fs_24 text-white">{{paramId ? 'Update' : 'Add'}} User</h4>
       <form [formGroup]="form" (ngSubmit)="onSubmit(form)" class="mt-4">
             <div class="row">
                   <div class="col-lg-6">
                         <div class="form-group mb-3">
-                              <label for="" class="ct_fw_600 mb-2">Name <span class="ct_red_star">*</span></label>
+                              <label for="" class="ct_fw_600 mb-2 text-white">Name <span
+                                          class="ct_red_star">*</span></label>
                               <input type="text" class="form-control ct_input" placeholder="John" formControlName="name"
                                     placeholder="Enter here...">
                               <p *ngIf="
@@ -22,7 +23,8 @@
                   </div>
                   <div class="col-lg-6">
                         <div class="form-group mb-3">
-                              <label for="" class="ct_fw_600 mb-2">Email <span class="ct_red_star">*</span></label>
+                              <label for="" class="ct_fw_600 mb-2 text-white">Email <span
+                                          class="ct_red_star">*</span></label>
                               <input type="text" class="form-control ct_input" placeholder="john@gmail.com"
                                     formControlName="email">
                               <p *ngIf="
@@ -40,7 +42,8 @@
                   </div>
                   <div class="col-lg-6">
                         <div class="form-group mb-3">
-                              <label for="" class="ct_fw_600 mb-2">Phone <span class="ct_red_star">*</span></label>
+                              <label for="" class="ct_fw_600 mb-2 text-white">Phone <span
+                                          class="ct_red_star">*</span></label>
                               <ngx-intl-tel-input [cssClass]="'ct_input form-control full_width ps-5'"
                                     [enableAutoCountrySelect]="false" [enablePlaceholder]="true"
                                     [searchCountryFlag]="true"
@@ -63,7 +66,8 @@
                   </div>
                   <div class="col-lg-6" *ngIf="!paramId">
                         <div class="form-group mb-3">
-                              <label for="" class="ct_fw_600 mb-2">Password <span class="ct_red_star">*</span></label>
+                              <label for="" class="ct_fw_600 mb-2 text-white">Password <span
+                                          class="ct_red_star">*</span></label>
                               <div class="position-relative">
                                     <input type="text" class="form-control ct_input" placeholder="********"
                                           formControlName="password">
@@ -84,7 +88,8 @@
                   </div>
                   <div class="col-lg-6">
                         <div class="form-group mb-3">
-                              <label for="" class="ct_fw_600 mb-2">Role <span class="ct_red_star">*</span></label>
+                              <label for="" class="ct_fw_600 mb-2 text-white">Role <span
+                                          class="ct_red_star">*</span></label>
                               <select class="form-control ct_input" (change)="userRoleChange($event)"
                                     formControlName="role">
                                     <option value="" disabled selected>-- Select --</option>
@@ -106,13 +111,13 @@
                         </div>
                   </div>
                   <div *ngIf="selectedUser == '1' || selectedUser == '3'" class="col-lg-6">
-                        <label for="" class="ct_fw_600 mb-2">Permissions</label>
+                        <label for="" class="ct_fw_600 mb-2 text-white">Permissions</label>
                         <div class="d-flex align-items-center gap-3 checkbox_gruop">
                               <ng-container *ngIf="selectedUser == '1'">
                                     <div class="form-check">
                                           <input class="form-check-input" type="checkbox" formControlName="CA"
                                                 id="Create">
-                                          <label class="form-check-label" for="Create">
+                                          <label class="form-check-label text-white" for="Create">
                                                 Create Albums
                                           </label>
                                     </div>
@@ -120,41 +125,41 @@
                                     <div class="form-check">
                                           <input class="form-check-input" type="checkbox" formControlName="HA"
                                                 id="Hide">
-                                          <label class="form-check-label" for="Hide">
+                                          <label class="form-check-label text-white" for="Hide">
                                                 Hide Albums
                                           </label>
                                     </div>
                                     <div class="form-check">
                                           <input class="form-check-input" type="checkbox" formControlName="CT" id="tag">
-                                          <label class="form-check-label" for="tag">
+                                          <label class="form-check-label text-white" for="tag">
                                                 Create Tag
                                           </label>
                                     </div>
                                     <div class="form-check">
                                           <input class="form-check-input" type="checkbox" formControlName="UI"
                                                 id="upload">
-                                          <label class="form-check-label" for="upload">
+                                          <label class="form-check-label text-white" for="upload">
                                                 Upload Image
                                           </label>
                                     </div>
                                     <div class="form-check">
                                           <input class="form-check-input" type="checkbox" formControlName="AR"
                                                 id="acceptReq">
-                                          <label class="form-check-label" for="acceptReq">
+                                          <label class="form-check-label text-white" for="acceptReq">
                                                 Accept User Request
                                           </label>
                                     </div>
                                     <div class="form-check">
                                           <input class="form-check-input" type="checkbox" formControlName="AC"
                                                 id="acceptCollab">
-                                          <label class="form-check-label" for="acceptCollab">
+                                          <label class="form-check-label text-white" for="acceptCollab">
                                                 Accept Collabration
                                           </label>
                                     </div>
                                     <div class="form-check">
                                           <input class="form-check-input" type="checkbox" formControlName="HIP"
                                                 id="hip">
-                                          <label class="form-check-label" for="hip">
+                                          <label class="form-check-label text-white" for="hip">
                                                 Hide Individual Photo
                                           </label>
                                     </div>
@@ -163,7 +168,7 @@
                                     <div class="form-check">
                                           <input class="form-check-input" type="checkbox" formControlName="DNI"
                                                 id="editUser">
-                                          <label class="form-check-label" for="editUser">
+                                          <label class="form-check-label text-white" for="editUser">
                                                 Download Image
                                           </label>
                                     </div>

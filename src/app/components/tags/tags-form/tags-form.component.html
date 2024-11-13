@@ -1,10 +1,11 @@
 <div class="ct_right_panel">
-      <h4 class="ct_fw_700 ct_fs_36">{{paramId ? 'Update' : 'Add'}} Tag</h4>
+      <h4 class="ct_fw_700 ct_fs_24 text-white">{{paramId ? 'Update' : 'Add'}} Tag</h4>
       <form [formGroup]="form" (ngSubmit)="onSubmit(form)" class="mt-4">
             <div class="row">
                   <div class="col-lg-6">
                         <div class="form-group mb-3">
-                              <label for="" class="ct_fw_600 mb-2">Tag Name <span class="ct_red_star">*</span></label>
+                              <label for="" class="ct_fw_600 mb-2 text-white">Tag Name <span
+                                          class="ct_red_star">*</span></label>
                               <input type="text" class="form-control ct_input" formControlName="name"
                                     placeholder="Enter here...">
                               <p *ngIf="

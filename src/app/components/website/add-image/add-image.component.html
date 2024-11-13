@@ -1,10 +1,11 @@
 <div class="ct_right_panel">
-      <h4 class="ct_fw_700 ct_fs_36">{{paramId ? 'Update' : 'Add'}} image/News</h4>
+      <h4 class="ct_fw_700 ct_fs_24 text-white">{{paramId ? 'Update' : 'Add'}} image/News</h4>
       <form [formGroup]="form" (ngSubmit)="onSubmit(form)" class="mt-4">
             <div class="row">
                   <div class="col-lg-6">
                         <div class="form-group mb-3">
-                              <label for="" class="ct_fw_600 mb-2">Category <span class="ct_red_star">*</span></label>
+                              <label for="" class="ct_fw_600 mb-2 text-white">Category <span
+                                          class="ct_red_star">*</span></label>
                               <select class="form-control ct_input" formControlName="category"
                                     (change)="getSubCategories($event)">
                                     <option value="" disabled selected>-- Select --</option>
@@ -28,7 +29,7 @@
                   <ng-container *ngIf="selectedType !== 'NEWS'">
                         <div class="col-lg-6">
                               <div class="form-group mb-3">
-                                    <label for="" class="ct_fw_600 mb-2">Sub Category <span
+                                    <label for="" class="ct_fw_600 mb-2 text-white">Sub Category <span
                                                 class="ct_red_star">*</span></label>
                                     <select class="form-control ct_input" formControlName="sub_category">
                                           <option value="" disabled selected>-- Select --</option>
@@ -42,8 +43,8 @@
 
                   <div class="col-lg-6">
                         <div class="form-group mb-3">
-                              <label for="" class="ct_fw_600 mb-2">{{selectedType == 'NEWS' ? 'Image': 'Images'}} <span
-                                          class="ct_red_star">*</span></label>
+                              <label for="" class="ct_fw_600 mb-2 text-white">{{selectedType == 'NEWS' ? 'Image':
+                                    'Images'}} <span class="ct_red_star">*</span></label>
                               <input type="file" (change)="onFileSelected($event)" class="form-control ct_input"
                                     [multiple]="selectedType !== 'NEWS'">
                         </div>
@@ -62,7 +63,7 @@
                   <ng-container *ngIf="selectedType == 'NEWS'">
                         <div class="col-lg-12">
                               <div class="form-group mb-3">
-                                    <label for="" class="ct_fw_600 mb-2">Title <span
+                                    <label for="" class="ct_fw_600 mb-2 text-white">Title <span
                                                 class="ct_red_star">*</span></label>
                                     <input type="text" class="form-control ct_input" formControlName="title"
                                           placeholder="Enter here...">
@@ -70,7 +71,7 @@
                         </div>
                         <div class="col-lg-12">
                               <div class="form-group mb-3">
-                                    <label for="" class="ct_fw_600 mb-2">Description <span
+                                    <label for="" class="ct_fw_600 mb-2 text-white">Description <span
                                                 class="ct_red_star">*</span></label>
                                     <div class="NgxEditor__Wrapper">
                                           <ngx-editor-menu [editor]="editor"> </ngx-editor-menu>
