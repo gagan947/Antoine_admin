@@ -37,7 +37,7 @@ export class DownloadedImagesComponent {
   getList() {
     let apiUrl = `image-log/getalliamgelog-byuserid?user_id=${this.paramId}`
     this.service.get(apiUrl).subscribe(res => {
-      if (res.status == 200) {
+      if (res.success) {
         this.data = res.logsData
       } else {
         this.toastr.error(res.message)

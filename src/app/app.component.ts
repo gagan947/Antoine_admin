@@ -18,14 +18,23 @@ export class AppComponent {
         this.loadExternalScript();
       }
     });
+
+    this.router.events.subscribe(event => {
+      if (event instanceof NavigationEnd) {
+        if (event.urlAfterRedirects === '/' && this.router.url.startsWith('/admin')) {
+          localStorage.clear();
+          console.log('Local storage cleared');
+        }
+      }
+    });
   }
 
   loadExternalScript() {
     const scriptElement = document.createElement('script');
     scriptElement.src = 'assets/js/main.js';
     scriptElement.onload = () => {
-      // console.log('External script loaded');
     };
     document.body.appendChild(scriptElement);
   }
+
 }

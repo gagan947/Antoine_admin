@@ -54,7 +54,12 @@ export class ImagesListComponent {
         if (this.offset === 0) {
           this.data = res.data.findImage;
         } else {
-          this.data = [...this.data, ...res.data.findImage];
+          this.data = [
+            ...this.data,
+            ...res.data.findImage.filter((item: { id: any; }) => !this.data.some(existingItem => existingItem.id === item.id))
+          ];
+          console.log("else", this.data);
+
         }
         this.offset += this.limit;
       }

@@ -54,7 +54,10 @@ export class AllImagesComponent {
         if (this.offset === 0) {
           this.data = res.data;
         } else {
-          this.data = [...this.data, ...res.data];
+          this.data = [
+            ...this.data,
+            ...res.data.filter((item: { id: any; }) => !this.data.some(existingItem => existingItem.id === item.id))
+          ];
         }
         this.offset += this.limit;
       }

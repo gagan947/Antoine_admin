@@ -12,8 +12,8 @@
       </ul> -->
       <div class="tab-content" id="pills-tabContent">
             <div class="tab-pane fade show active" id="pills-home" role="tabpanel" aria-labelledby="pills-home-tab">
-                  <div class="d-flex justify-content-between align-items-center">
-                        <h4 class="ct_fw_700 ct_fs_36">Website Images</h4>
+                  <div class="d-flex justify-content-between align-items-center mb-4">
+                        <h4 class="ct_fw_700 ct_fs_24 text-white">Website Images</h4>
                         <a *ngIf="permissionObject.UI" routerLink="/website/add-new" class="ct_blue_btn mb-2">
                               + Upload New
                         </a>
@@ -37,54 +37,63 @@
                                                       </div> -->
                                                 </div>
                                           </div>
-                                          <div class="ct_grid_5 mt-4">
-                                                @for (item of data; track $index) {
-                                                <div *ngIf="item.website_category_id !== 5" class="ct_col_2 mb-4">
-                                                      <div class="ct_post_card">
-                                                            <figure>
-                                                                  <div class="ct_post_img">
-                                                                        <img [src]="item.image_url" alt="">
-                                                                        <div class="ct_post_action_overlay">
-                                                                              <ul class="">
-                                                                                    <li class="dropdown">
-                                                                                          <i class="fa-solid fa-ellipsis-vertical"
-                                                                                                id="dropdownMenuButton1"
-                                                                                                data-bs-toggle="dropdown"
-                                                                                                aria-expanded="false"></i>
-                                                                                          <ul class="dropdown-menu"
-                                                                                                aria-labelledby="dropdownMenuButton1">
-                                                                                                <li><a routerLink="/website/image-preview"
-                                                                                                            [queryParams]="{id : item.id}"
-                                                                                                            class="dropdown-item">View</a>
-                                                                                                </li>
-                                                                                                <!-- <li><a class="dropdown-item"
+
+                                          <ng-container *ngIf="data.length>0 ;else default">
+                                                <div class="ct_grid_5 mt-4">
+                                                      @for (item of data; track $index) {
+                                                      <div *ngIf="item.website_category_id !== 5" class="ct_col_2 mb-4">
+                                                            <div class="ct_post_card">
+                                                                  <figure>
+                                                                        <div class="ct_post_img">
+                                                                              <img [src]="item.image_url" alt="">
+                                                                              <div class="ct_post_action_overlay">
+                                                                                    <ul class="">
+                                                                                          <li class="dropdown">
+                                                                                                <i class="fa-solid fa-ellipsis-vertical"
+                                                                                                      id="dropdownMenuButton1"
+                                                                                                      data-bs-toggle="dropdown"
+                                                                                                      aria-expanded="false"></i>
+                                                                                                <ul class="dropdown-menu"
+                                                                                                      aria-labelledby="dropdownMenuButton1">
+                                                                                                      <li><a routerLink="/website/image-preview"
+                                                                                                                  [queryParams]="{id : item.id}"
+                                                                                                                  class="dropdown-item">View</a>
+                                                                                                      </li>
+                                                                                                      <!-- <li><a class="dropdown-item"
                                                                                                             routerLink="/website/add-new"
                                                                                                             [queryParams]="{id : item.id}">Edit</a>
                                                                                                 </li> -->
-                                                                                                <li
-                                                                                                      *ngIf="userData.role == '0'">
-                                                                                                      <a (click)="openModal(item.id)"
-                                                                                                            class="dropdown-item pointer">Delete</a>
-                                                                                                </li>
-                                                                                          </ul>
-                                                                                    </li>
+                                                                                                      <li
+                                                                                                            *ngIf="userData.role == '0'">
+                                                                                                            <a (click)="openModal(item.id)"
+                                                                                                                  class="dropdown-item pointer">Delete</a>
+                                                                                                      </li>
+                                                                                                </ul>
+                                                                                          </li>
 
-                                                                                    <!-- <li class="ct_delete_icon"   data-bs-toggle="modal" data-bs-target="#ct_delete_post"><i class="fa-solid fa-trash-can"></i></li> -->
-                                                                              </ul>
+                                                                                          <!-- <li class="ct_delete_icon"   data-bs-toggle="modal" data-bs-target="#ct_delete_post"><i class="fa-solid fa-trash-can"></i></li> -->
+                                                                                    </ul>
+                                                                              </div>
                                                                         </div>
-                                                                  </div>
-                                                                  <figcaption>
-                                                                        <h4 class="ct_fs_18 ct_fw_600 text-white">
-                                                                              {{item.image_name}}</h4>
-                                                                        <p class="mb-0 text-white">{{item.created_at |
-                                                                              date:'short'}}
-                                                                        </p>
-                                                                  </figcaption>
-                                                            </figure>
+                                                                        <figcaption>
+                                                                              <h4 class="ct_fs_18 ct_fw_600 text-white">
+                                                                                    {{item.image_name}}</h4>
+                                                                              <p class="mb-0 text-white">
+                                                                                    {{item.created_at |
+                                                                                    date:'short'}}
+                                                                              </p>
+                                                                        </figcaption>
+                                                                  </figure>
+                                                            </div>
                                                       </div>
+                                                      }
                                                 </div>
-                                                }
-                                          </div>
+                                          </ng-container>
+                                          <ng-template #default>
+                                                <h2 class="text-white text-center mt-3 no_data">NO IMAGES FOUND !
+                                                </h2>
+                                          </ng-template>
+
                                           <app-model #modal (confirmed)=" onModalConfirm()">
                                           </app-model>
                                     </div>

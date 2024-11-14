@@ -25,59 +25,68 @@
                                                       </div> -->
                                                 </div>
                                           </div>
-                                          <div class="ct_grid_5 mt-4">
-                                                @for (item of data; track $index) {
-                                                <div class="ct_col_2 mb-4">
-                                                      <div class="ct_post_card">
-                                                            <figure>
-                                                                  <div class="ct_post_img">
-                                                                        <img [src]="item.image" alt="">
-                                                                        <div class="ct_post_action_overlay">
-                                                                              <ul class="">
-                                                                                    <li class="dropdown">
-                                                                                          <i class="fa-solid fa-ellipsis-vertical"
-                                                                                                id="dropdownMenuButton1"
-                                                                                                data-bs-toggle="dropdown"
-                                                                                                aria-expanded="false"></i>
-                                                                                          <ul class="dropdown-menu"
-                                                                                                aria-labelledby="dropdownMenuButton1">
-                                                                                                <li><a routerLink="/image-detail"
-                                                                                                            [queryParams]="{id : item.id}"
-                                                                                                            class="dropdown-item">View</a>
-                                                                                                </li>
-                                                                                                <ng-container
-                                                                                                      *ngIf="permissionObject.AC">
-                                                                                                      <li><a class="dropdown-item"
-                                                                                                                  (click)="changeStatus(item.id,2)">Accept</a>
+                                          <ng-container *ngIf="data.length>0 ;else default">
+                                                <div class="ct_grid_5 mt-4">
+                                                      @for (item of data; track $index) {
+                                                      <div class="ct_col_2 mb-4">
+                                                            <div class="ct_post_card">
+                                                                  <figure>
+                                                                        <div class="ct_post_img">
+                                                                              <img [src]="item.image" alt="">
+                                                                              <div class="ct_post_action_overlay">
+                                                                                    <ul class="">
+                                                                                          <li class="dropdown">
+                                                                                                <i class="fa-solid fa-ellipsis-vertical"
+                                                                                                      id="dropdownMenuButton1"
+                                                                                                      data-bs-toggle="dropdown"
+                                                                                                      aria-expanded="false"></i>
+                                                                                                <ul class="dropdown-menu"
+                                                                                                      aria-labelledby="dropdownMenuButton1">
+                                                                                                      <li><a routerLink="/image-detail"
+                                                                                                                  [queryParams]="{id : item.id}"
+                                                                                                                  class="dropdown-item">View</a>
                                                                                                       </li>
-                                                                                                      <li><a class="dropdown-item"
-                                                                                                                  (click)="changeStatus(item.id,3)">Reject</a>
-                                                                                                      </li>
-                                                                                                </ng-container>
-                                                                                          </ul>
-                                                                                    </li>
+                                                                                                      <ng-container
+                                                                                                            *ngIf="permissionObject.AC">
+                                                                                                            <li><a class="dropdown-item"
+                                                                                                                        (click)="changeStatus(item.id,2)">Accept</a>
+                                                                                                            </li>
+                                                                                                            <li><a class="dropdown-item"
+                                                                                                                        (click)="changeStatus(item.id,3)">Reject</a>
+                                                                                                            </li>
+                                                                                                      </ng-container>
+                                                                                                </ul>
+                                                                                          </li>
 
-                                                                                    <!-- <li class="ct_delete_icon"   data-bs-toggle="modal" data-bs-target="#ct_delete_post"><i class="fa-solid fa-trash-can"></i></li> -->
-                                                                              </ul>
+                                                                                          <!-- <li class="ct_delete_icon"   data-bs-toggle="modal" data-bs-target="#ct_delete_post"><i class="fa-solid fa-trash-can"></i></li> -->
+                                                                                    </ul>
+                                                                              </div>
                                                                         </div>
-                                                                  </div>
-                                                                  <figcaption>
-                                                                        <h5 class="ct_fs_18 ct_fw_600 text-white">
-                                                                              {{item.image_name}}</h5>
-                                                                        <p class="mb-0 text-white"><strong>Requested By
-                                                                                    :</strong>
-                                                                              {{item.name}}
-                                                                        </p>
-                                                                        <p class="mb-0 text-white">{{item.created_at |
-                                                                              date:'short'}}
-                                                                        </p>
+                                                                        <figcaption>
+                                                                              <h5 class="ct_fs_18 ct_fw_600 text-white">
+                                                                                    {{item.image_name}}</h5>
+                                                                              <p class="mb-0 text-white">
+                                                                                    <strong>Requested By
+                                                                                          :</strong>
+                                                                                    {{item.name}}
+                                                                              </p>
+                                                                              <p class="mb-0 text-white">
+                                                                                    {{item.created_at |
+                                                                                    date:'short'}}
+                                                                              </p>
 
-                                                                  </figcaption>
-                                                            </figure>
+                                                                        </figcaption>
+                                                                  </figure>
+                                                            </div>
                                                       </div>
+                                                      }
                                                 </div>
-                                                }
-                                          </div>
+                                          </ng-container>
+                                          <ng-template #default>
+                                                <h2 class="text-white text-center mt-3 no_data">NO REQUESTS FOUND
+                                                      !</h2>
+                                          </ng-template>
+
                                     </div>
                               </div>
                         </div>

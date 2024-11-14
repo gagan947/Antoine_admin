@@ -105,16 +105,15 @@ export class UploadMediaComponent {
     this.service.get(apiurl).subscribe(res => {
       if (res.success) {
         const data = res.imageData.findImageProfile[0]
-
         data.sub_album.forEach((album: any) => {
           this.filteredCatOptions.forEach(category => {
-            if (category.id === album.category_id) {
+            if (category.id == album.category_id) {
               category.subcategoryData.forEach((subcategory: any) => {
-                if (subcategory.id === album.subcategory_id) {
+                if (subcategory.id == album.subcategory_id) {
                   subcategory.selected = true;
                   category.selected = true
                   const existingItem = this.selectedCatItems.find(item =>
-                    item.categoryId === category.id && item.subcategoryId === subcategory.id
+                    item.categoryId == category.id && item.subcategoryId == subcategory.id
                   );
 
                   if (!existingItem) {

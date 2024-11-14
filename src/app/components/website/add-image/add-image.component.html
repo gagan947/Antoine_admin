@@ -45,7 +45,9 @@
                         <div class="form-group mb-3">
                               <label for="" class="ct_fw_600 mb-2 text-white">{{selectedType == 'NEWS' ? 'Image':
                                     'Images'}} <span class="ct_red_star">*</span></label>
-                              <input type="file" (change)="onFileSelected($event)" class="form-control ct_input"
+                              <input type="file"
+                                    accept="image/jpeg, image/jpg, image/png, image/gif, video/mp4, video/mov, video/avi, video/x-matroska"
+                                    (change)="onFileSelected($event)" class="form-control ct_input"
                                     [multiple]="selectedType !== 'NEWS'">
                         </div>
                   </div>

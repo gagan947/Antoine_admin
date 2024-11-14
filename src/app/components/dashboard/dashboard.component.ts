@@ -44,7 +44,7 @@ export class DashboardComponent {
     this.loading = true
     let apiUrl = `user/total-usersposts`
     this.service.get(apiUrl).subscribe(res => {
-      if (res.status == 200) {
+      if (res.success) {
         this.data = res.dataCount
         this.loading = false
       } else {

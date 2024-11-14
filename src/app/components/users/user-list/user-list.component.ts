@@ -51,7 +51,7 @@ export class UserListComponent {
   getUsers() {
     let apiUrl = `user/get-alluser?page=${this.currentPage}&limit=${this.pageSize}&search=${this.searchQuery}`
     this.service.get(apiUrl).subscribe(res => {
-      if (res.status == 200) {
+      if (res.success) {
         this.data = res.allUsers
         this.totalPages = res.pagination.totalPages
       } else {

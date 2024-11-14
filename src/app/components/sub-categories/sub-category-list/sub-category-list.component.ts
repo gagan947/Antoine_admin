@@ -55,7 +55,7 @@ export class SubCategoryListComponent {
     this.loading = true
     let apiUrl = `subcategory/get-all/?page=${this.currentPage}&limit=${this.pageSize}&search=${this.searchQuery}`
     this.service.get(apiUrl).subscribe(res => {
-      if (res.status == 200) {
+      if (res.success) {
         this.data = res.subcategoryAll
         this.totalPages = res.pagination.totalPages
         this.loading = false
