@@ -21,6 +21,10 @@ import { ImagesListComponent } from './components/website/images-list/images-lis
 import { AddImageComponent } from './components/website/add-image/add-image.component';
 import { ImagePreviewComponent } from './components/website/image-preview/image-preview.component';
 import { CollabRequestComponent } from './components/request/collab-request/collab-request.component';
+import { SubSubcategorisListComponent } from './components/sub-subcategories/sub-subcategoris-list/sub-subcategoris-list.component';
+import { SubSubcategorisFormComponent } from './components/sub-subcategories/sub-subcategoris-form/sub-subcategoris-form.component';
+import { SubTagListComponent } from './components/sub-tag/sub-tag-list/sub-tag-list.component';
+import { SubTagFormComponent } from './components/sub-tag/sub-tag-form/sub-tag-form.component';
 
 const routes: Routes = [
   {
@@ -57,10 +61,22 @@ const routes: Routes = [
     path: 'sub-categories/sub-category-form', component: SubCategoryFormComponent, canActivate: [AuthGuard]
   },
   {
+    path: 'sub-subcategories', component: SubSubcategorisListComponent, canActivate: [AuthGuard]
+  },
+  {
+    path: 'sub-subcategories/sub-subcategory-form', component: SubSubcategorisFormComponent, canActivate: [AuthGuard]
+  },
+  {
     path: 'tags', component: TagsListComponent, canActivate: [AuthGuard]
   },
   {
     path: 'tags/tags-form', component: TagsFormComponent, canActivate: [AuthGuard]
+  },
+  {
+    path: 'sub-tags', component: SubTagListComponent, canActivate: [AuthGuard]
+  },
+  {
+    path: 'sub-tags/sub-tags-form', component: SubTagFormComponent, canActivate: [AuthGuard]
   },
   {
     path: 'all-images/upload-media', component: UploadMediaComponent, canActivate: [AuthGuard]

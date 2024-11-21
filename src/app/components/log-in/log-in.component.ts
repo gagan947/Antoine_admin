@@ -43,7 +43,7 @@ export class LogInComponent {
           this.loading = false;
           this.toastr.success(res.message)
           this.service.setToken(res.login_token)
-          localStorage.setItem('userData', JSON.stringify(res.userData))
+          localStorage.setItem('adminData', JSON.stringify(res.userData))
           this.router.navigate(['/dashboard'])
         } else {
           this.toastr.error('Invalid Credential')

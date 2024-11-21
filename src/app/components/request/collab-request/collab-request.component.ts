@@ -19,7 +19,7 @@ export class CollabRequestComponent {
     private router: Router,
     private toastr: ToastrService,
   ) {
-    const userDataString: any = localStorage.getItem('userData');
+    const userDataString: any = localStorage.getItem('adminData');
 
     if (userDataString) {
       try {

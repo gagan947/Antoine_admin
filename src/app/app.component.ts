@@ -13,6 +13,11 @@ export class AppComponent {
   constructor(private router: Router, public auth: AuthService) { }
 
   ngOnInit() {
+
+    if (this.auth.isLogedIn()) {
+      this.router.navigate(['/dashboard'])
+    }
+
     this.router.events.subscribe((event: any) => {
       if (event instanceof NavigationEnd) {
         this.loadExternalScript();

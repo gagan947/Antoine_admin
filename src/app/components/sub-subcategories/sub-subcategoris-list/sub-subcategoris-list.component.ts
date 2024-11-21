@@ -1,16 +1,15 @@
 import { Component, ViewChild } from '@angular/core';
-import { FormBuilder } from '@angular/forms';
 import { ToastrService } from 'ngx-toastr';
 import { SharedService } from '../../../services/shared.service';
 import { Router } from '@angular/router';
 import { ModelComponent } from '../../shared/model/model.component';
 
 @Component({
-  selector: 'app-sub-category-list',
-  templateUrl: './sub-category-list.component.html',
-  styleUrl: './sub-category-list.component.css'
+  selector: 'app-sub-subcategoris-list',
+  templateUrl: './sub-subcategoris-list.component.html',
+  styleUrl: './sub-subcategoris-list.component.css'
 })
-export class SubCategoryListComponent {
+export class SubSubcategorisListComponent {
   data: any;
   totalPagesArray: number[] = [];
   currentPage: number = 1;
@@ -23,7 +22,6 @@ export class SubCategoryListComponent {
   permissionObject: any;
 
   constructor(
-    private fb: FormBuilder,
     private toastr: ToastrService,
     private service: SharedService,
     private router: Router

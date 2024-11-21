@@ -1,16 +1,14 @@
 import { Component, ViewChild } from '@angular/core';
-import { FormBuilder } from '@angular/forms';
 import { ToastrService } from 'ngx-toastr';
 import { SharedService } from '../../../services/shared.service';
-import { Router } from '@angular/router';
 import { ModelComponent } from '../../shared/model/model.component';
 
 @Component({
-  selector: 'app-sub-category-list',
-  templateUrl: './sub-category-list.component.html',
-  styleUrl: './sub-category-list.component.css'
+  selector: 'app-sub-tag-list',
+  templateUrl: './sub-tag-list.component.html',
+  styleUrl: './sub-tag-list.component.css'
 })
-export class SubCategoryListComponent {
+export class SubTagListComponent {
   data: any;
   totalPagesArray: number[] = [];
   currentPage: number = 1;
@@ -23,10 +21,8 @@ export class SubCategoryListComponent {
   permissionObject: any;
 
   constructor(
-    private fb: FormBuilder,
     private toastr: ToastrService,
     private service: SharedService,
-    private router: Router
   ) {
     const userDataString: any = localStorage.getItem('adminData');
 
@@ -48,19 +44,19 @@ export class SubCategoryListComponent {
   searchQuery: any = '';
 
   ngOnInit() {
-    this.getCategories()
+    this.getTags()
   }
 
-  getCategories() {
+  getTags() {
     this.loading = true
-    let apiUrl = `subcategory/get-all/?page=${this.currentPage}&limit=${this.pageSize}&search=${this.searchQuery}`
+    let apiUrl = `tag/get-all/?page=${this.currentPage}&limit=${this.pageSize}&search=${this.searchQuery}`
     this.service.get(apiUrl).subscribe(res => {
       if (res.success) {
-        this.data = res.subcategoryAll
+        this.data = res.tagAll
         this.totalPages = res.pagination.totalPages
         this.loading = false
       } else {
-        this.toastr.error(res.message)
+        //this.toastr.error(res.message)
         this.loading = false
       }
     })
@@ -69,13 +65,13 @@ export class SubCategoryListComponent {
   changePage(page: number) {
     if (page < 1 || page > this.totalPages) return;
     this.currentPage = page;
-    this.getCategories();
+    this.getTags();
   }
 
   changePageSize(newPageSize: number) {
     this.pageSize = newPageSize;
     this.currentPage = 1;
-    this.getCategories();
+    this.getTags();
   }
 
   @ViewChild('modal') modal!: ModelComponent;
@@ -87,13 +83,14 @@ export class SubCategoryListComponent {
 
   onModalConfirm() {
     this.loading = true
-    let apiUrl = `subcategory/delete/?id=${this.deleteId}`
+    let apiUrl = `tag/delete/?id=${this.deleteId}`
     this.service.delete(apiUrl).subscribe(res => {
       if (res.success) {
         this.data = res.message
         this.loading = false
         this.toastr.success(res.message)
-        this.getCategories()
+        this.getTags()
+
       } else {
         this.toastr.error(res.message)
         this.loading = false

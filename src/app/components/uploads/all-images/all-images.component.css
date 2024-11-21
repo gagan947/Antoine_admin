@@ -1,6 +1,13 @@
 .pointer {
   cursor: pointer;
 }
+
 .ct_post_card figure {
   background-color: #171717;
+}
+
+.ct_filter_by {
+  white-space: nowrap;
+  font-size: large;
+  font-weight: 500;
 }

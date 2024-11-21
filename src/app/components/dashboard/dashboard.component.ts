@@ -17,7 +17,7 @@ export class DashboardComponent {
     private toastr: ToastrService,
     private service: SharedService,
   ) {
-    const userDataString: any = localStorage.getItem('userData');
+    const userDataString: any = localStorage.getItem('adminData');
 
     if (userDataString) {
       try {

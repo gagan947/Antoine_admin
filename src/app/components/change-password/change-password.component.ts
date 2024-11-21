@@ -24,7 +24,7 @@ export class ChangePasswordComponent {
     private router: Router
   ) {
 
-    const userData: any = localStorage.getItem('userData')
+    const userData: any = localStorage.getItem('adminData')
     this.userData = JSON.parse(userData)
 
     this.form = this.fb.group({

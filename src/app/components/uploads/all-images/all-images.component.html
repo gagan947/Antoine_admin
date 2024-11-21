@@ -13,12 +13,30 @@
                               <div class="ct_flex_2">
                                     <h2 class="ct_fs_24 text-white ct_fw_600">Images</h2>
                                     <div class="ct_right_filter_main">
+                                          <div>
+                                                <span class="text-white ct_filter_by">Filter By :</span>
+                                          </div>
+                                          <div class="ct_search">
+                                                <select class="form-control" (change)="onCategoryChange($event)">
+                                                      <option value="" disabled selected>Category</option>
+                                                      @for (item of categoryData; track $index) {
+                                                      <option [value]="item.id">{{item.category_name}}</option>
+                                                      }
+                                                </select>
+                                          </div>
+                                          <div *ngIf="subcategoryData" class="ct_search">
+                                                <select class="form-control" (change)="onSubCategoryChange($event)">
+                                                      <option value="" disabled selected>Sub Category</option>
+                                                      @for (item of subcategoryData; track $index) {
+                                                      <option [value]="item.id">{{item.subcategory_name}}</option>
+                                                      }
+                                                </select>
+                                          </div>
                                           <div class="ct_search">
                                                 <input type="text" class="form-control" style="padding-right: 34px;"
                                                       [(ngModel)]="searchQuery" (ngModelChange)="search()"
                                                       placeholder="Search Image">
                                                 <i class="fa-solid fa-magnifying-glass"></i>
-
                                           </div>
 
                                           <!-- <div class="w-100">

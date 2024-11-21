@@ -32,9 +32,11 @@ export class AddImageComponent {
       title: [''],
       category: ['', Validators.required],
       sub_category: [''],
-      file: [''],
+      file: ['', Validators.required],
       description: [''],
     })
+
+    this.updateValidators();
 
     this.route.queryParams.subscribe((params) => {
       this.paramId = params['id']
@@ -50,6 +52,22 @@ export class AddImageComponent {
     }
   }
 
+  updateValidators() {
+    if (this.selectedType === 'NEWS') {
+      this.form.get('title')?.setValidators([Validators.required]);
+      this.form.get('description')?.setValidators([Validators.required]);
+      this.form.get('sub_category')?.clearValidators();
+    } else {
+      this.form.get('title')?.clearValidators();
+      this.form.get('description')?.clearValidators();
+      this.form.get('sub_category')?.setValidators([Validators.required]);
+    }
+
+    this.form.get('title')?.updateValueAndValidity();
+    this.form.get('description')?.updateValueAndValidity();
+    this.form.get('sub_category')?.updateValueAndValidity();
+  }
+
   onFileSelected(event: any) {
     const input = event.target as HTMLInputElement;
     if (input.files && input.files.length > 0) {
@@ -59,7 +77,11 @@ export class AddImageComponent {
         this.selectedImages.push(file);
         const reader = new FileReader();
         reader.onload = (e: any) => {
-          this.uploadedImages.push(e.target.result);
+          if (this.selectedType == 'NEWS') {
+            this.uploadedImages = [e.target.result]
+          } else {
+            this.uploadedImages.push(e.target.result);
+          }
         };
         reader.readAsDataURL(file);
       }
@@ -149,6 +171,7 @@ export class AddImageComponent {
         this.toastr.error(res.message)
       }
     })
+    this.updateValidators();
   }
 
   removeImg(index: number): void {

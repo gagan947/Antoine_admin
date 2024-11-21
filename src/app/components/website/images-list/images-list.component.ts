@@ -12,19 +12,24 @@ import { ModelComponent } from '../../shared/model/model.component';
 export class ImagesListComponent {
   data: any[] = [];
   loading: boolean = false;
+  loading2: boolean = false;
   offset = 0;
   limit = 10;
   deleteId: any;
   userData: any;
   permissionObject: any;
   searchQuery: any = '';
+  categoryData: any;
+  category_id: any = null;
+  subcategoryData: any;
+  subCategory_id: any = null;
 
   constructor(
     private service: SharedService,
     private router: Router,
     private toastr: ToastrService,
   ) {
-    const userDataString: any = localStorage.getItem('userData');
+    const userDataString: any = localStorage.getItem('adminData');
 
     if (userDataString) {
       try {
@@ -43,11 +48,12 @@ export class ImagesListComponent {
 
   ngOnInit() {
     this.getImages()
+    this.getCategories()
   }
 
   getImages(): void {
-    this.loading = true;
-    const apiUrl = `website-images/get-websiteimages?website_category_id=null&website_subcategory_id=null&limit=${this.limit}&offset=${this.offset}&imageSearch=${this.searchQuery}`;
+    this.loading2 = true;
+    const apiUrl = `website-images/get-websiteimages?website_category_id=${this.category_id}&website_subcategory_id=${this.subCategory_id}&limit=${this.limit}&offset=${this.offset}&imageSearch=${this.searchQuery}`;
 
     this.service.get(apiUrl).subscribe(res => {
       if (res.success) {
@@ -63,6 +69,7 @@ export class ImagesListComponent {
         }
         this.offset += this.limit;
       }
+      this.loading2 = false;
       this.loading = false;
     });
   }
@@ -79,7 +86,7 @@ export class ImagesListComponent {
     const position = window.pageYOffset + window.innerHeight;
     const height = document.documentElement.scrollHeight;
 
-    if (position > height - threshold && !this.loading) {
+    if (position > height - threshold && !this.loading2) {
       this.getImages();
     }
   }
@@ -107,5 +114,45 @@ export class ImagesListComponent {
         this.loading = false
       }
     })
+  }
+
+  getCategories() {
+    let apiUrl = `website-images/get-websitecategory`
+    this.service.get(apiUrl).subscribe(res => {
+      if (res.success) {
+        this.categoryData = res.category
+      } else {
+        this.toastr.error(res.message)
+      }
+    })
+  }
+
+  onCategoryChange(event: any) {
+    this.loading = true
+    this.offset = 0;
+    this.data = [];
+    this.category_id = event.target.value
+    this.subCategory_id = null
+    this.subcategoryData = undefined
+    this.getImages();
+
+    let apiUrl = `website-images/get-websitesubcategory`
+    let formData = new URLSearchParams()
+    formData.set('category_id', event.target.value)
+    this.service.post(apiUrl, formData.toString()).subscribe(res => {
+      if (res.success) {
+        this.subcategoryData = res.subcategory
+      } else {
+        this.toastr.error(res.message)
+      }
+    })
+  }
+
+  onSubCategoryChange(event: any) {
+    this.loading = true
+    this.offset = 0;
+    this.data = [];
+    this.subCategory_id = event.target.value
+    this.getImages();
   }
 }

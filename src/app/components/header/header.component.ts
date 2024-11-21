@@ -9,7 +9,7 @@ import { Router } from '@angular/router';
 export class HeaderComponent {
   userData: any;
   constructor(private router: Router) {
-    const userData: any = localStorage.getItem('userData')
+    const userData: any = localStorage.getItem('adminData')
     this.userData = JSON.parse(userData)
   }
   logout() {

@@ -25,7 +25,7 @@ export class UserListComponent {
     private service: SharedService,
     private router: Router
   ) {
-    const userDataString: any = localStorage.getItem('userData');
+    const userDataString: any = localStorage.getItem('adminData');
 
     if (userDataString) {
       try {

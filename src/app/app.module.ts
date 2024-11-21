@@ -34,6 +34,10 @@ import { AddImageComponent } from './components/website/add-image/add-image.comp
 import { ImagePreviewComponent } from './components/website/image-preview/image-preview.component';
 import { NgxEditorModule } from 'ngx-editor';
 import { CollabRequestComponent } from './components/request/collab-request/collab-request.component';
+import { SubSubcategorisListComponent } from './components/sub-subcategories/sub-subcategoris-list/sub-subcategoris-list.component';
+import { SubSubcategorisFormComponent } from './components/sub-subcategories/sub-subcategoris-form/sub-subcategoris-form.component';
+import { SubTagListComponent } from './components/sub-tag/sub-tag-list/sub-tag-list.component';
+import { SubTagFormComponent } from './components/sub-tag/sub-tag-form/sub-tag-form.component';
 
 @NgModule({
   declarations: [
@@ -61,7 +65,11 @@ import { CollabRequestComponent } from './components/request/collab-request/coll
     ImagesListComponent,
     AddImageComponent,
     ImagePreviewComponent,
-    CollabRequestComponent
+    CollabRequestComponent,
+    SubSubcategorisListComponent,
+    SubSubcategorisFormComponent,
+    SubTagListComponent,
+    SubTagFormComponent
   ],
   imports: [
     CommonModule,

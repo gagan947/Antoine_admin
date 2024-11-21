@@ -18,13 +18,17 @@ export class AllImagesComponent {
   userData: any;
   permissionObject: any;
   searchQuery: any = '';
+  subcategoryData: any;
+  categoryData: any;
+  category_id: any = null
+  subCategory_id: any = null
 
   constructor(
     private service: SharedService,
     private router: Router,
     private toastr: ToastrService,
   ) {
-    const userDataString: any = localStorage.getItem('userData');
+    const userDataString: any = localStorage.getItem('adminData');
 
     if (userDataString) {
       try {
@@ -43,11 +47,12 @@ export class AllImagesComponent {
 
   ngOnInit() {
     this.getImages()
+    this.getCategories()
   }
 
   getImages(): void {
     this.loading = true;
-    const apiUrl = `image/getadmin-allalbums?limit=${this.limit}&offset=${this.offset}&imageSearch=${this.searchQuery}`;
+    const apiUrl = `image/getadmin-allalbums?category_id=${this.category_id}&subcategory_id=${this.subCategory_id}&limit=${this.limit}&offset=${this.offset}&imageSearch=${this.searchQuery}`;
 
     this.service.get(apiUrl).subscribe(res => {
       if (res.success) {
@@ -108,5 +113,39 @@ export class AllImagesComponent {
         this.loading = false
       }
     })
+  }
+
+  getCategories() {
+    let apiUrl = `category/get-all`
+    this.service.get(apiUrl).subscribe(res => {
+      if (res.success) {
+        this.categoryData = res.categoryAll
+      } else {
+        this.toastr.error(res.message)
+      }
+    })
+  }
+
+  onCategoryChange(event: any) {
+    this.offset = 0;
+    this.data = [];
+    this.category_id = event.target.value
+    this.getImages();
+
+    let apiUrl = `subcategory/getsubcategory-categoryid?category_id=${event.target.value}`
+    this.service.get(apiUrl).subscribe(res => {
+      if (res.success) {
+        this.subcategoryData = res.data.subcategoryData
+      } else {
+        this.toastr.error(res.message)
+      }
+    })
+  }
+
+  onSubCategoryChange(event: any) {
+    this.offset = 0;
+    this.data = [];
+    this.subCategory_id = event.target.value
+    this.getImages();
   }
 }

@@ -30,8 +30,7 @@
                                     <h4 class="ct_cyan_text">Tags</h4>
                                     <p class="mb-0 text-white">
                                           <span *ngFor="let tag of data?.tags; let i=index">
-                                                {{tag?.tag}},
-                                          </span>
+                                                {{tag?.tag}} {{i < data?.tags.length - 1 ? ',' : '' }} </span>
                                     </p>
                               </li>
                               <li>
@@ -40,7 +39,8 @@
                                           @for (item of data?.sub_album; track $index) {
                                           <li class="mt-2"> <a class="text-white" routerLink="/sub-categories"
                                                       [queryParams]="{id : item?.category_id}">{{item.category_name
-                                                      | uppercase}}</a> /
+                                                      | uppercase}}</a> <ng-container *ngIf="item.subcategory_name"> /
+                                                </ng-container>
                                                 <a class="text-white" routerLink="/sub-album"
                                                       [queryParams]="{cat_id : item?.category_id, id : item?.subcategory_id}">{{item.subcategory_name
                                                       | uppercase}}</a>

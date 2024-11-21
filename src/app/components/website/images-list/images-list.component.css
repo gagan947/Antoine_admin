@@ -1,3 +1,9 @@
 .pointer {
       cursor: pointer;
 }
+
+.ct_filter_by {
+      white-space: nowrap;
+      font-size: large;
+      font-weight: 500;
+}
