@@ -48,9 +48,9 @@ export class SubTagFormComponent {
     let apiUrl = ''
     let formData = new URLSearchParams()
     if (this.paramId) {
-      apiUrl = `tag/update`
+      apiUrl = `tag/update-subTag`
       formData.set('tag_id', form.value.tag)
-      formData.set('subTagName', form.value.name)
+      formData.set('subTag_name', form.value.name)
       formData.set('id', this.paramId)
     } else {
       apiUrl = `tag/create_subTag`
@@ -77,13 +77,14 @@ export class SubTagFormComponent {
   }
 
   getById() {
-    let apiurl = `tag/get-id?id=${this.paramId}`
+    let apiurl = `tag/get-sub-tagby-id?id=${this.paramId}`
     this.service.get(apiurl).subscribe(res => {
       if (res.success) {
-        const data = res.tagData
+        const data = res.subTagData
         this.form.patchValue(
           {
-            name: data.tag
+            name: data.sub_tagName,
+            tag: data.tag_id,
           }
         )
       } else {

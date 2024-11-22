@@ -12,10 +12,10 @@
                                     <div class="form-control ct_input tag_input" (click)="toggleCatDropdown(true)">
                                           <ng-container *ngIf="selectedCatItems.length > 0; else default">
                                                 <span *ngFor="let item of selectedCatItems" class="selected-item">
-                                                      {{ item.categoryName }} {{ item.subcategoryName ?
-                                                      '('+item.subcategoryName+')'
-                                                      :
-                                                      '' }}
+                                                      {{ item.categoryName }}
+                                                      {{ item.subcategoryName ? '(' + item.subcategoryName +
+                                                      (item.subSubCategoryName ? ' (' + item.subSubCategoryName + ')' :
+                                                      '') + ')' : '' }}
                                                 </span>
                                           </ng-container>
                                           <ng-template #default>
@@ -29,14 +29,16 @@
                                                 (input)="filterCatOptions()" />
                                           <ng-container *ngFor="let category of filteredCatOptions">
                                                 <div class="category-item">
+                                                      <!-- Main Category Checkbox -->
                                                       <input class="form-check-input" type="checkbox"
                                                             [checked]="category.selected" [id]="category.category_name"
                                                             (change)="onCategoryChange(category, $event)" />
-                                                      <label class="category_name" [for]="category.category_name">{{
-                                                            category.category_name
-                                                            }}</label>
+                                                      <label class="category_name" [for]="category.category_name">
+                                                            {{ category.category_name }}
+                                                      </label>
 
-                                                      <ul *ngIf="category.subcategoryData && category.subcategoryData.length > 0"
+                                                      <!-- Subcategories -->
+                                                      <ul *ngIf="category.subcategoryData?.length > 0"
                                                             class="subcategories">
                                                             <ng-container
                                                                   *ngFor="let subcategory of category.subcategoryData">
@@ -46,13 +48,37 @@
                                                                               [checked]="subcategory.selected"
                                                                               [disabled]="subcategory.disabled"
                                                                               (change)="onSubcategoryChange(category, subcategory, $event)" />
-                                                                        <label [for]="subcategory.subcategory_name">{{
-                                                                              subcategory.subcategory_name }}</label>
+                                                                        <label [for]="subcategory.subcategory_name">
+                                                                              {{ subcategory.subcategory_name }}
+                                                                        </label>
+
+                                                                        <!-- Sub-Subcategories -->
+                                                                        <ul *ngIf="subcategory.sub_sub_category_data?.length > 0"
+                                                                              class="sub_subcategories">
+                                                                              <ng-container
+                                                                                    *ngFor="let subsubcategory of subcategory.sub_sub_category_data">
+                                                                                    <li class="sub_sub_category_list">
+                                                                                          <input class="form-check-input"
+                                                                                                type="checkbox"
+                                                                                                [id]="subsubcategory.sub_sub_categoryName"
+                                                                                                [checked]="subsubcategory.selected"
+                                                                                                [disabled]="subsubcategory.disabled"
+                                                                                                (change)="onSubSubcategoryChange(category, subcategory, subsubcategory, $event)" />
+                                                                                          <label
+                                                                                                [for]="subsubcategory.sub_sub_categoryName">
+                                                                                                {{
+                                                                                                subsubcategory.sub_sub_categoryName
+                                                                                                }}
+                                                                                          </label>
+                                                                                    </li>
+                                                                              </ng-container>
+                                                                        </ul>
                                                                   </li>
                                                             </ng-container>
                                                       </ul>
                                                 </div>
                                           </ng-container>
+
                                           <div *ngIf="filteredCatOptions?.length == 0 || !filteredCatOptions"
                                                 class="text-center">
                                                 <p class="ct_fs_15 text-white">No items found</p>
@@ -62,16 +88,19 @@
                         </div>
                   </div>
 
-
                   <div class="col-lg-6">
                         <div class="form-group mb-3">
-                              <label for="" class="ct_fw_600 text-white mb-2">Tags <span
-                                          class="ct_red_star">*</span></label>
+                              <label for="" class="ct_fw_600 text-white mb-2">
+                                    Tags <span class="ct_red_star">*</span>
+                              </label>
                               <div class="multi-select-container">
                                     <div class="form-control ct_input tag_input" (click)="toggleDropdown(true)">
-                                          <ng-container *ngIf="selectedItems.length > 0 ;else default">
+                                          <ng-container *ngIf="selectedItems.length > 0; else default">
                                                 <span *ngFor="let item of selectedItems" class="selected-item">
-                                                      {{ item.tag }}
+                                                      {{ item.tag_name }}
+                                                      <ng-container *ngIf="item.subtag_name.length > 0">
+                                                            ({{ item.subtag_name.join(', ') }})
+                                                      </ng-container>
                                                       <span class="remove-item" (click)="removeItem(item)">x</span>
                                                 </span>
                                           </ng-container>
@@ -80,15 +109,28 @@
                                           </ng-template>
                                     </div>
                                     <div *ngIf="dropdownOpen" class="dropdown">
-                                          <input type="text" class="ct_input ct_input_search" placeholder="Search..."
-                                                formControlName="tags" [(ngModel)]="searchTerm"
+                                          <input type="text" class="ct_input ct_input_search" formControlName="tags"
+                                                placeholder="Search..." [(ngModel)]="searchTerm"
                                                 (input)="filterOptions()" />
-                                          <ul>
-                                                <li *ngFor="let option of filteredOptions" (click)="selectItem(option)">
-                                                      {{ option.tag }}
+                                          <ul class="category-item">
+                                                <li *ngFor="let option of filteredOptions" class="tag_list">
+                                                      <input class="form-check-input" type="checkbox" [id]="option.tag"
+                                                            [checked]="option.selected"
+                                                            (change)="onTagChange(option, $event)" />
+                                                      <label [for]="option.tag">{{ option.tag }}</label>
+                                                      <ul *ngIf="option.subTagData?.length > 0">
+                                                            <li *ngFor="let subTag of option.subTagData"
+                                                                  class="sub_category_list">
+                                                                  <input class="form-check-input" type="checkbox"
+                                                                        [id]="subTag.sub_tagName"
+                                                                        [checked]="subTag.selected"
+                                                                        (change)="onSubTagChange(option, subTag, $event)" />
+                                                                  <label [for]="subTag.sub_tagName">{{
+                                                                        subTag.sub_tagName }}</label>
+                                                            </li>
+                                                      </ul>
                                                 </li>
-                                                <div *ngIf="filteredOptions?.length == 0 || !filteredOptions"
-                                                      class="text-center">
+                                                <div *ngIf="filteredOptions?.length === 0" class="text-center">
                                                       <p class="ct_fs_15 text-white">No items found</p>
                                                 </div>
                                           </ul>

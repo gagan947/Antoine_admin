@@ -161,6 +161,8 @@ export class UploadMediaComponent {
         this.toastr.error(res.message)
       }
     })
+    console.log(this.filteredOptions);
+
   }
 
   options: string[] = ['Option 1', 'Option 2', 'Option 3', 'Gagan'];
@@ -186,8 +188,13 @@ export class UploadMediaComponent {
 
   filterOptions() {
     if (this.searchTerm) {
-      this.filteredOptions = this.tagData.filter((item: { tag: string; }) =>
-        item.tag.toLowerCase().includes(this.searchTerm.toLowerCase())
+      const search = this.searchTerm.toLowerCase();
+      this.filteredOptions = this.tagData.filter(
+        (item: any) =>
+          item.tag.toLowerCase().includes(search) ||
+          item.subTagData?.some((sub: any) =>
+            sub.sub_tagName.toLowerCase().includes(search)
+          )
       );
     } else {
       this.filteredOptions = [...this.tagData];
@@ -196,92 +203,241 @@ export class UploadMediaComponent {
 
   filterCatOptions() {
     if (this.searchCatTerm) {
-      this.filteredCatOptions = this.data.filter((item: any) =>
-        item.category_name.toLowerCase().includes(this.searchCatTerm.toLowerCase())
-      );
+      const searchTerm = this.searchCatTerm.toLowerCase();
+      this.filteredCatOptions = this.data.filter((item: any) => {
+        const matchesCategory = item.category_name.toLowerCase().includes(searchTerm);
+        const matchesSubcategory = item.subcategoryData?.some((sub: any) =>
+          sub.subcategory_name.toLowerCase().includes(searchTerm)
+        );
+        const matchesSubSubcategory = item.subcategoryData?.some((sub: any) =>
+          sub.sub_sub_category_data?.some((subSub: any) =>
+            subSub.sub_sub_categoryName.toLowerCase().includes(searchTerm)
+          )
+        );
+        return matchesCategory || matchesSubcategory || matchesSubSubcategory;
+      });
     } else {
       this.filteredCatOptions = [...this.data];
     }
   }
 
-  selectItem(option: string) {
-    if (!this.selectedItems.includes(option)) {
-      this.selectedItems.push(option);
+  onTagChange(tag: any, event: any) {
+    tag.selected = event.target.checked;
+    if (tag.selected) {
+      const existingTag = this.selectedItems.find((item) => item.id === tag.id);
+      if (!existingTag) {
+        this.selectedItems.push({ id: tag.id, tag: tag.tag, subTagName: null });
+      }
+    } else {
+      this.selectedItems = this.selectedItems.filter((item) => item.id !== tag.id);
+      tag.subTagData?.forEach((subTag: any) => {
+        subTag.selected = false;
+      });
     }
-    this.searchTerm = '';
-    this.filterOptions();
   }
 
-  removeItem(option: string) {
-    this.selectedItems = this.selectedItems.filter(item => item !== option);
+  onSubTagChange(tag: any, subTag: any, event: any) {
+    subTag.selected = event.target.checked;
+
+    // Find if the tag is already in selectedItems
+    let existingTag = this.selectedItems.find(item => item.tag_id === tag.id);
+
+    if (subTag.selected) {
+      // If the tag is not in selectedItems, add it
+      if (!existingTag) {
+        this.selectedItems.push({
+          tag_id: tag.id,
+          tag_name: tag.tag,
+          subtag_id: [subTag.id],
+          subtag_name: [subTag.sub_tagName]
+        });
+      } else {
+        // If the tag is already in selectedItems, add the subTag ID and name to the subtag arrays
+        if (!existingTag.subtag_id.includes(subTag.id)) {
+          existingTag.subtag_id.push(subTag.id);
+          existingTag.subtag_name.push(subTag.sub_tagName);
+        }
+      }
+    } else {
+      // If the subTag is deselected, remove the subTag ID and name from the arrays
+      if (existingTag) {
+        const subTagIndex = existingTag.subtag_id.indexOf(subTag.id);
+        if (subTagIndex !== -1) {
+          existingTag.subtag_id.splice(subTagIndex, 1);
+          existingTag.subtag_name.splice(subTagIndex, 1);
+        }
+
+        // If no subTags remain selected for this tag, remove the tag from selectedItems
+        if (existingTag.subtag_id.length === 0) {
+          this.selectedItems = this.selectedItems.filter(item => item.tag_id !== tag.id);
+        }
+      }
+    }
+    tag.selected = tag.subTagData.some((sub: any) => sub.selected);
+
+    console.log('Updated selectedItems:', this.selectedItems);
   }
 
 
-  onCategoryChange(category: any, event: any) {
+
+  removeItem(item: any) {
+    this.selectedItems = this.selectedItems.filter((selected) => selected !== item);
+    const tag = this.data.find((t: any) => t.id === item.id);
+    if (tag) {
+      tag.selected = false;
+      if (item.subTagName) {
+        const subTag = tag.subTagData?.find((sub: any) => sub.sub_tagName === item.subTagName);
+        if (subTag) {
+          subTag.selected = false;
+          subTag.disabled = false;
+        }
+      } else {
+        tag.subTagData?.forEach((sub: any) => {
+          sub.selected = false;
+          sub.disabled = false;
+        });
+      }
+    }
+    console.log(this.selectedItems);
+
+  }
+
+
+  onCategoryChange(category: any, event: any): void {
     category.selected = event.target.checked;
-
     if (category.selected) {
-      const existingCategory = this.selectedCatItems.find(item => item.categoryId === category.id && item.subcategoryId === null);
-
-      if (!existingCategory) {
-        this.selectedCatItems.push({
+      this.selectedCatItems.push(
+        {
           categoryId: category.id,
           subcategoryId: null,
           categoryName: category.category_name,
-          subcategoryName: null
-        });
-      }
-    } else {
-      this.selectedCatItems = this.selectedCatItems.filter(item => item.categoryId !== category.id);
-      category.subcategoryData.forEach((sub: any) => {
+          subcategoryName: null,
+        },
+      );
+
+      category.subcategoryData?.forEach((sub: any) => {
         sub.selected = false;
+        sub.disabled = false;
+
+        sub.sub_sub_category_data?.forEach((subSub: any) => {
+          subSub.selected = false;
+          subSub.disabled = false;
+        });
+      });
+    } else {
+      this.selectedCatItems = this.selectedCatItems.filter(
+        (item) => item.categoryId !== category.id
+      );
+
+      category.subcategoryData?.forEach((sub: any) => {
+        sub.selected = false;
+        sub.disabled = false;
+
+        sub.sub_sub_category_data?.forEach((subSub: any) => {
+          subSub.selected = false;
+          subSub.disabled = false;
+        });
+      });
+    }
+  }
+
+  onSubcategoryChange(category: any, subcategory: any, event: any): void {
+    subcategory.selected = event.target.checked;
+
+    if (subcategory.selected) {
+      category.selected = true;
+
+      this.selectedCatItems.push(
+        {
+          categoryId: category.id,
+          subcategoryId: subcategory.id,
+          categoryName: category.category_name,
+          subcategoryName: subcategory.subcategory_name,
+        },
+      );
+
+      category.subcategoryData?.forEach((sub: any) => {
+        sub.disabled = sub !== subcategory;
+
+        sub.sub_sub_category_data?.forEach((subSub: any) => {
+          subSub.selected = false;
+          subSub.disabled = sub !== subcategory;
+        });
+      });
+    } else {
+      this.selectedCatItems = this.selectedCatItems.filter(
+        (item) => item.subcategoryId !== subcategory.id
+      );
+
+      const anySelected = category.subcategoryData?.some((sub: any) => sub.selected);
+      if (!anySelected) {
+        category.selected = false;
+      }
+
+      category.subcategoryData?.forEach((sub: any) => {
         sub.disabled = false;
       });
     }
   }
 
-  onSubcategoryChange(category: any, subcategory: any, event: any) {
-    subcategory.selected = event.target.checked;
-    category.selected = event.target.checked;
+  onSubSubcategoryChange(
+    category: any,
+    subcategory: any,
+    subsubcategory: any,
+    event: any
+  ): void {
+    subsubcategory.selected = event.target.checked;
 
-    if (subcategory.selected) {
-      const existingCategoryIndex = this.selectedCatItems.findIndex(item => item.categoryId === category.id && item.subcategoryId === null);
+    if (subsubcategory.selected) {
+      category.selected = true;
+      subcategory.selected = true;
 
-      if (existingCategoryIndex !== -1) {
-        this.selectedCatItems[existingCategoryIndex] = {
+      this.selectedCatItems.push(
+        {
           categoryId: category.id,
           subcategoryId: subcategory.id,
+          subSubcategoryId: subsubcategory.id,
           categoryName: category.category_name,
-          subcategoryName: subcategory.subcategory_name
-        };
-      } else {
-        this.selectedCatItems.push({
-          categoryId: category.id,
-          subcategoryId: subcategory.id,
-          categoryName: category.category_name,
-          subcategoryName: subcategory.subcategory_name
+          subcategoryName: subcategory.subcategory_name,
+          subSubCategoryName: subsubcategory.sub_sub_categoryName,
+        },
+      );
+
+      category.subcategoryData?.forEach((sub: any) => {
+        sub.disabled = sub !== subcategory;
+
+        sub.sub_sub_category_data?.forEach((subSub: any) => {
+          subSub.disabled = sub !== subcategory || subSub !== subsubcategory;
         });
-      }
-
-      category.subcategoryData.forEach((sub: any) => {
-        if (sub !== subcategory) {
-          sub.disabled = true;
-        }
       });
     } else {
-      this.selectedCatItems = this.selectedCatItems.filter(item => item.subcategoryId !== subcategory.id);
+      this.selectedCatItems = this.selectedCatItems.filter(
+        (item) => item.subSubCategoryName !== subsubcategory.sub_sub_categoryName
+      );
 
-      const anySelected = category.subcategoryData.some((sub: any) => sub.selected);
+      const anySelected = subcategory.sub_sub_category_data?.some(
+        (subSub: any) => subSub.selected
+      );
       if (!anySelected) {
-        category.subcategoryData.forEach((sub: any) => (sub.disabled = false));
-
-        this.selectedCatItems.push({
-          categoryId: category.id,
-          subcategoryId: null,
-          categoryName: category.category_name,
-          subcategoryName: null
-        });
+        subcategory.selected = false;
       }
+
+      const subcategoriesSelected = category.subcategoryData?.some(
+        (sub: any) => sub.selected
+      );
+      if (!subcategoriesSelected) {
+        category.selected = false;
+      }
+
+      subcategory.sub_sub_category_data?.forEach((subSub: any) => {
+        subSub.disabled = false;
+      });
+
+      category.subcategoryData?.forEach((sub: any) => {
+        sub.disabled = false;
+      });
     }
+    console.log(this.selectedCatItems);
   }
+
 }

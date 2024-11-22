@@ -37,7 +37,7 @@
                                                 @for (item of data; track $index) {
                                                 <tr>
                                                       <td>{{ (currentPage - 1) * pageSize + $index + 1 }}</td>
-                                                      <td>{{item.subtag}}</td>
+                                                      <td>{{item.sub_tagName}}</td>
                                                       <td>{{item.tag}}</td>
                                                       <td>{{item.created_at | date:'mediumDate'}}</td>
                                                       <!-- <td>
@@ -49,7 +49,7 @@
                                                       <td>
                                                             <div class="d-flex gap-2">
                                                                   <i *ngIf="permissionObject.CT"
-                                                                        routerLink="/tags/tags-form"
+                                                                        routerLink="/sub-tags/sub-tags-form"
                                                                         [queryParams]="{id : item.id}"
                                                                         class="fa-regular fa-edit">
                                                                   </i>
@@ -100,4 +100,4 @@
             </div>
       </div>
 </div>
-<!-- <app-loader *ngIf="loading"></app-loader> -->
+<app-loader *ngIf="loading"></app-loader>

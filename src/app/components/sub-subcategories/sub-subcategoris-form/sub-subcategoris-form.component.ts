@@ -15,6 +15,7 @@ export class SubSubcategorisFormComponent {
   paramId: any
   data: any;
   subcategoryData: any;
+  loading: boolean = false;
 
   constructor(
     private fb: FormBuilder,
@@ -46,13 +47,15 @@ export class SubSubcategorisFormComponent {
     if (form.invalid) {
       return
     }
+    this.loading = true;
     let apiUrl = ''
     let formData = new URLSearchParams()
     if (this.paramId) {
-      apiUrl = `subcategory/update-subcategory`
+      apiUrl = `subcategory/update-sub-subcategory`
       formData.set('id', this.paramId)
-      formData.set('sub_subcategory_name', form.value.name)
-      formData.set('subCategory_id', form.value.sub_category)
+      formData.set('subsubcategory_name', form.value.name)
+      formData.set('categoryId', form.value.category)
+      formData.set('subcategory_id', form.value.sub_category)
     } else {
       apiUrl = `subcategory/create-sub-subCategory`
       formData.set('sub_subcategory_name', form.value.name)
@@ -66,6 +69,7 @@ export class SubSubcategorisFormComponent {
       } else {
         this.toastr.error(res.message)
       }
+      this.loading = false
     })
   }
 
@@ -78,19 +82,23 @@ export class SubSubcategorisFormComponent {
   }
 
   getById() {
-    let apiurl = `subcategory/get-id?id=${this.paramId}`
+    this.loading = true
+    let apiurl = `subcategory/get-sub-sub-categoryById?id=${this.paramId}`
     this.service.get(apiurl).subscribe(res => {
       if (res.success) {
         const data = res.subcategoryData
+        this.onCategoryChange(data.category_id)
         this.form.patchValue(
           {
-            name: data.subcategory_name,
+            name: data.sub_sub_categoryName,
             category: data.category_id,
+            sub_category: data.subCategoryId,
           }
         )
       } else {
         this.toastr.error(res.message)
       }
+      this.loading = false
     })
   }
 
@@ -106,7 +114,7 @@ export class SubSubcategorisFormComponent {
   }
 
   onCategoryChange(event: any) {
-    let apiUrl = `subcategory/getsubcategory-categoryid?category_id=${event.target.value}`
+    let apiUrl = `subcategory/getsubcategory-categoryid?category_id=${event.target?.value ? event.target.value : event}`
     this.service.get(apiUrl).subscribe(res => {
       if (res.success) {
         this.subcategoryData = res.data.subcategoryData

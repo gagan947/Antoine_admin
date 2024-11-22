@@ -49,10 +49,10 @@ export class SubTagListComponent {
 
   getTags() {
     this.loading = true
-    let apiUrl = `tag/get-all/?page=${this.currentPage}&limit=${this.pageSize}&search=${this.searchQuery}`
+    let apiUrl = `tag/get-allSubTag/?page=${this.currentPage}&limit=${this.pageSize}&search=${this.searchQuery}`
     this.service.get(apiUrl).subscribe(res => {
       if (res.success) {
-        this.data = res.tagAll
+        this.data = res.getAllSubTag
         this.totalPages = res.pagination.totalPages
         this.loading = false
       } else {
@@ -83,18 +83,16 @@ export class SubTagListComponent {
 
   onModalConfirm() {
     this.loading = true
-    let apiUrl = `tag/delete/?id=${this.deleteId}`
+    let apiUrl = `tag/delete-subTag?id=${this.deleteId}`
     this.service.delete(apiUrl).subscribe(res => {
       if (res.success) {
         this.data = res.message
-        this.loading = false
         this.toastr.success(res.message)
         this.getTags()
-
       } else {
         this.toastr.error(res.message)
-        this.loading = false
       }
+      this.loading = false
     })
   }
 }

@@ -38,7 +38,7 @@
                                                 @for (item of data; track $index) {
                                                 <tr>
                                                       <td>{{ (currentPage - 1) * pageSize + $index + 1 }}</td>
-                                                      <td>NA</td>
+                                                      <td>{{item?.sub_sub_categoryName}}</td>
                                                       <td>{{item.subcategory_name}}</td>
                                                       <td>{{item.category_name}}</td>
                                                       <td>{{item.created_at | date:'mediumDate'}}</td>
@@ -101,4 +101,4 @@
             </div>
       </div>
 </div>
-<!-- <app-loader *ngIf="loading"></app-loader> -->
+<app-loader *ngIf="loading"></app-loader>

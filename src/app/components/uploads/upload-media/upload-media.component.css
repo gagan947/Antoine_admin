@@ -16,7 +16,7 @@
 }
 
 .remove-item {
-      cursor: pointer;
+      cursor: pointer !important;
       margin-left: 5px;
       color: red;
 }
@@ -42,10 +42,11 @@
       color: #fff;
 }
 
+/* 
 .dropdown li:hover {
       background-color: #eee;
       color: #000;
-}
+} */
 
 .selected-item {
       background-color: #2ed0ff;
@@ -88,8 +89,9 @@
       font-weight: 700;
 }
 
-.dropdown .sub_category_list {
-      padding: 3px 15px;
+.dropdown .sub_category_list,
+.dropdown .sub_category_list .sub_sub_category_list {
+      padding: 3px 25px;
 }
 
 .overlay {
@@ -121,4 +123,8 @@
       display: flex;
       flex-wrap: wrap;
       height: auto !important;
+}
+
+.tag_list {
+      padding: 0 8px !important;
 }

@@ -51,10 +51,10 @@ export class SubSubcategorisListComponent {
 
   getCategories() {
     this.loading = true
-    let apiUrl = `subcategory/get-all/?page=${this.currentPage}&limit=${this.pageSize}&search=${this.searchQuery}`
+    let apiUrl = `subcategory/get-all-sub-sub-category?page=${this.currentPage}&limit=${this.pageSize}&search=${this.searchQuery}`
     this.service.get(apiUrl).subscribe(res => {
       if (res.success) {
-        this.data = res.subcategoryAll
+        this.data = res.fetchAllSubSubCategory
         this.totalPages = res.pagination.totalPages
         this.loading = false
       } else {
@@ -85,7 +85,7 @@ export class SubSubcategorisListComponent {
 
   onModalConfirm() {
     this.loading = true
-    let apiUrl = `subcategory/delete/?id=${this.deleteId}`
+    let apiUrl = `subcategory/deleteSub-subcategory?id=${this.deleteId}`
     this.service.delete(apiUrl).subscribe(res => {
       if (res.success) {
         this.data = res.message
