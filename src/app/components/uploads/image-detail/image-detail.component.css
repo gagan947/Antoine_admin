@@ -31,6 +31,7 @@
   padding: 34px 48px;
   border-radius: 20px;
 }
+
 .ct_studio_card_456 ul {
   padding-left: 0px;
   margin-bottom: 0px;
@@ -50,9 +51,10 @@
   font-size: 14px;
 }
 
-.ct_studio_card_456 ul li + li {
+.ct_studio_card_456 ul li+li {
   margin-top: 20px;
 }
+
 .ct_cyan_text {
   color: #2ed0ff !important;
 }
@@ -64,4 +66,8 @@
     padding: 15px;
     gap: 20px;
   }
+}
+
+.textwhite {
+  color: #fff !important;
 }

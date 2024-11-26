@@ -55,12 +55,11 @@ export class SubSubcategorisListComponent {
     this.service.get(apiUrl).subscribe(res => {
       if (res.success) {
         this.data = res.fetchAllSubSubCategory
-        this.totalPages = res.pagination.totalPages
-        this.loading = false
+        this.totalPages = res.pagination?.totalPages
       } else {
         this.toastr.error(res.message)
-        this.loading = false
       }
+      this.loading = false
     })
   }
 

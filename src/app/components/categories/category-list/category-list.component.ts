@@ -57,7 +57,7 @@ export class CategoryListComponent {
     this.service.get(apiUrl).subscribe(res => {
       if (res.success) {
         this.data = res.categoryAll
-        this.totalPages = res.pagination.totalPages
+        this.totalPages = res.pagination?.totalPages
         this.loading = false
       } else {
         //this.toastr.error(res.message)

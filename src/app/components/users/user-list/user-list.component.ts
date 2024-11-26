@@ -53,7 +53,7 @@ export class UserListComponent {
     this.service.get(apiUrl).subscribe(res => {
       if (res.success) {
         this.data = res.allUsers
-        this.totalPages = res.pagination.totalPages
+        this.totalPages = res.pagination?.totalPages
       } else {
         this.toastr.error(res.message)
       }

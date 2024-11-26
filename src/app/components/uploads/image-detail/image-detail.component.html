@@ -29,23 +29,29 @@
                               <li>
                                     <h4 class="ct_cyan_text">Tags</h4>
                                     <p class="mb-0 text-white">
-                                          <span *ngFor="let tag of data?.tags; let i=index">
-                                                {{tag?.tag}} {{i < data?.tags.length - 1 ? ',' : '' }} </span>
+                                          <span *ngFor="let tag of data.tags; let i = index">
+                                                {{ tag.tagName }}
+                                                <ng-container *ngIf="tag.subTags && tag.subTags.length > 0">
+                                                      (
+                                                      <span *ngFor="let subTag of tag.subTags; let j = index">
+                                                            {{ subTag.subTagName }}{{ j < tag.subTags.length - 1 ? ', '
+                                                                  : '' }} </span>
+                                                                  )
+                                                </ng-container>
+                                                {{ i < data.tags.length - 1 ? ',' : '' }} </span>
                                     </p>
                               </li>
                               <li>
                                     <h4 class="ct_cyan_text">Albums</h4>
                                     <ul>
-                                          @for (item of data?.sub_album; track $index) {
-                                          <li class="mt-2"> <a class="text-white" routerLink="/sub-categories"
-                                                      [queryParams]="{id : item?.category_id}">{{item.category_name
-                                                      | uppercase}}</a> <ng-container *ngIf="item.subcategory_name"> /
-                                                </ng-container>
-                                                <a class="text-white" routerLink="/sub-album"
-                                                      [queryParams]="{cat_id : item?.category_id, id : item?.subcategory_id}">{{item.subcategory_name
-                                                      | uppercase}}</a>
+                                          <li class="mt-1 textwhite"
+                                                *ngFor="let item of getUniqueSubAlbums(data?.sub_album)">
+                                                <a class="text-white">{{ item.category_name | uppercase }}</a>
+                                                <ng-container *ngIf="item.subcategory_name"> / </ng-container>
+                                                <a class="text-white">{{ item.subcategory_name | uppercase }}</a>
+                                                <ng-container *ngIf="item.sub_sub_categoryName"> / </ng-container>
+                                                <a class="text-white">{{ item.sub_sub_categoryName | uppercase }}</a>
                                           </li>
-                                          }
                                     </ul>
                               </li>
                         </ul>

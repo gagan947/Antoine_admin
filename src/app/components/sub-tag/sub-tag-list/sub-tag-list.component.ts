@@ -53,12 +53,10 @@ export class SubTagListComponent {
     this.service.get(apiUrl).subscribe(res => {
       if (res.success) {
         this.data = res.getAllSubTag
-        this.totalPages = res.pagination.totalPages
-        this.loading = false
-      } else {
-        //this.toastr.error(res.message)
-        this.loading = false
+        this.totalPages = res.pagination?.totalPages
       }
+      //this.toastr.error(res.message)
+      this.loading = false
     })
   }
 
